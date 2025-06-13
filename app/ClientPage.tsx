@@ -84,12 +84,12 @@ export default function ClientPage() {
     },
     {
       title: "Rumbeldirgantara",
-      type: "Project",
-      role: "Full Stack Developer",
-      period: "July 2020 - September 2020",
-      delay: "0.5s",
+      type: "Work",
+      role: "Web Developer",
+      period: "August 2022 - Present",
+      delay: "0.1s",
       description:
-        "Developed and maintained web applications for a tutoring center, including features for class schedules, student management, and online learning resources.",
+        "Developed and maintained a tutoring website for elementary school students focusing on simplicity, responsiveness, and easy navigation for parents. Visit their website at rumbeldirgantara.com.",
     },
   ]
 
@@ -102,9 +102,9 @@ export default function ClientPage() {
 
   const projectsData = [
     {
-      title: "Home Cleaning App",
+      title: "Rumah Kinclong",
       description:
-        "A mobile application for booking home cleaning services with real-time scheduling and service tracking.",
+        "Developed a mobile application for booking home cleaning services with real-time scheduling and service tracking. Implemented user-friendly interfaces and secure payment integrations.",
       video: "/videos/cleaning-app.mp4",
       isVideo: true,
       tags: ["React Native", "Firebase", "Redux", "Stripe"],
@@ -113,23 +113,25 @@ export default function ClientPage() {
       category: "mobile",
     },
     {
-      title: "Marketplace App",
-      description: "A modern and responsive marketplace application with product listings and search functionality.",
+      title: "Quondam E-commerce Website Design",
+      description:
+        "Created a modern, user-friendly e-commerce concept with Figma, prioritizing smooth navigation and efficient product search.",
       video: "/videos/marketplace-app.mp4",
       isVideo: true,
-      tags: ["React", "Next.js", "Tailwind CSS", "MongoDB"],
+      tags: ["Figma", "UI/UX", "E-commerce"],
       link: "#",
       github: "#",
       category: "web",
     },
     {
-      title: "Task Management App",
-      description: "A collaborative task management application with real-time updates and team features.",
+      title: "Rumbeldirgantara",
+      description:
+        "Developed and maintained a tutoring website for elementary school students focusing on simplicity, responsiveness, and easy navigation for parents. Visit their website at rumbeldirgantara.com.",
       video: "/videos/task-management.mov",
       isVideo: true,
       tags: ["Vue.js", "Firebase", "Vuex"],
-      link: "#",
-      github: "#",
+      link: "https://rumbeldirgantara.com",
+      github: "https://github.com/arapcihuy/jarialjabar",
       category: "web",
     },
   ]
@@ -356,28 +358,10 @@ export default function ClientPage() {
                   )}
                 </div>
                 <div className="p-4">
-                  <h3 className="font-medium text-lg text-black dark:text-white mb-2 transition-colors duration-300 flex items-center gap-2">
+                  <h3 className="font-bold text-lg text-black dark:text-black mb-2 transition-colors duration-300">
                     {project.title}
-                    <span className="inline-flex items-center justify-center w-4 h-4 text-gray-400 dark:text-gray-500 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1">
-                      <svg
-                        width="12"
-                        height="12"
-                        viewBox="0 0 12 12"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="transition-transform duration-300 group-hover:rotate-12"
-                      >
-                        <path
-                          d="M1 6H11M11 6L6 1M11 6L6 11"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </span>
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-3 transition-colors duration-300">
+                  <p className="text-sm text-gray-600 dark:text-gray-900 mb-3 transition-colors duration-300">
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-2 mb-4">
