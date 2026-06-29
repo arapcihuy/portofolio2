@@ -6,15 +6,15 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { translations } from "@/lib/translations"
 
 const galleryImages = [
-  { src: "/portfolio/flut-home.jpg", alt: "Flut App Homepage" },
-  { src: "/portfolio/flut-app.jpg", alt: "Flut Dashboard" },
+  { src: "/portfolio/flut-hero.png", alt: "Flut Hero - Visual Head Dots" },
+  { src: "/portfolio/flut-iphone.png", alt: "Flut iPhone Mockup" },
+  { src: "/portfolio/flut-chess.png", alt: "Flut Chess Pieces" },
+  { src: "/portfolio/flut-hand-phone.png", alt: "Flut Hand Phone" },
+  { src: "/portfolio/flut-heads.png", alt: "Flut Neural Heads" },
+  { src: "/portfolio/flut-logo.png", alt: "Flut Logo" },
   { src: "/portfolio/cimeds-screenshot.jpg", alt: "CIMEDs Portal" },
   { src: "/portfolio/cbs-portal.jpg", alt: "CBS Company Profile" },
   { src: "/portfolio/rumbel-website.jpg", alt: "Rumbeldirgantara Website" },
-  { src: "/portfolio/quondam-ecommerce.jpg", alt: "Quondam E-commerce" },
-  { src: "/portfolio/rumah-kinclong.jpg", alt: "Rumah Kinclong App" },
-  { src: "/portfolio/gallery_12.jpg", alt: "Dashboard Analytics" },
-  { src: "/portfolio/gallery_13.jpg", alt: "Data Visualization" },
 ]
 
 interface GalleryProps {

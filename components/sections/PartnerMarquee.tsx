@@ -9,7 +9,7 @@ interface PartnerMarqueeProps {
 }
 
 const partners = [
-  { name: "Flut Technology", logo: "/portfolio/flut-app.jpg" },
+  { name: "Flut Technology", logo: "/portfolio/flut-logo.png" },
   { name: "UGM", logo: "/1279831.png" },
   { name: "CIMEDs", logo: "/ontiyus-logo-full.png" },
   { name: "CBS", logo: "/logo-cbs.png" },

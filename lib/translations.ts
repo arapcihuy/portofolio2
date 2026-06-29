@@ -131,7 +131,7 @@ export const translatedProjects = (locale: "EN" | "ID") => [
   {
     title: "Flut App — Cybersecurity",
     description: locale === "EN" ? "Video-first hiring platform secured by our cybersecurity team." : "Platform perekrutan berbasis video yang diamankan oleh tim keamanan siber kami.",
-    image: "/portfolio/flut-home.jpg",
+    image: "/portfolio/flut-iphone.png",
     isVideo: false,
     tags: ["Security", "Penetration Testing", "Infrastructure"],
     link: "https://flutapp.com",

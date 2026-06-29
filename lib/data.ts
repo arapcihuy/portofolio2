@@ -98,7 +98,7 @@ export const projectsData = [
   {
     title: "Flut App — Cybersecurity",
     description: "Video-first hiring platform secured by our cybersecurity team.",
-    image: "/portfolio/flut-home.jpg",
+    image: "/portfolio/flut-iphone.png",
     isVideo: false,
     tags: ["Security", "Penetration Testing", "Infrastructure"],
     link: "https://flutapp.com",
