@@ -10,11 +10,17 @@ interface PartnerMarqueeProps {
 
 const partners = [
   { name: "Flut Technology", logo: "/portfolio/flut-app.jpg" },
-  { name: "UGM / CIMEDs", logo: "/1279831.png" },
-  { name: "PT Ontiyus Karya Mulia", logo: "/ontiyus-logo-full.png" },
-  { name: "PT Cakra Bahana Sakti", logo: "/logo-cbs.png" },
+  { name: "UGM", logo: "/1279831.png" },
+  { name: "CIMEDs", logo: "/ontiyus-logo-full.png" },
+  { name: "CBS", logo: "/logo-cbs.png" },
   { name: "Bangkit Academy", logo: "/channels4_profile.jpg" },
-  { name: "Cisco Networking", logo: "/Cisco_logo_blue_2016.svg.png" },
+  { name: "Cisco", logo: "/Cisco_logo_blue_2016.svg.png" },
+  { name: "Rumbeldirgantara", logo: "/Cropped_Image.png" },
+  { name: "Rumah Kinclong", logo: "/download (2).png" },
+  { name: "Quondam", logo: "/quondam-logo.png" },
+  { name: "Merdeka Siber", logo: "/logo-merdeka-siber.png" },
+  { name: "9Router", logo: "/logo.png" },
+  { name: "Hermes Agent", logo: "/favicon.png" },
 ]
 
 export default function PartnerMarquee({ locale }: PartnerMarqueeProps) {
@@ -31,7 +37,7 @@ export default function PartnerMarquee({ locale }: PartnerMarqueeProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-4 text-center font-medium text-white text-xl md:text-3xl"
+          className="mb-4 text-center font-medium text-white text-lg md:text-2xl"
         >
           <span className="text-white/70">{t("partner.heading1")}</span><br />
           <span className="font-semibold text-white">{t("partner.heading2")}</span>
@@ -49,8 +55,8 @@ export default function PartnerMarquee({ locale }: PartnerMarqueeProps) {
           <div className="overflow-hidden py-4 relative [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
             <motion.div
               animate={{ x: ["0%", "-50%"] }}
-              transition={{ ease: "linear", duration: 20, repeat: Infinity }}
-              className="flex w-max gap-12"
+              transition={{ ease: "linear", duration: 25, repeat: Infinity }}
+              className="flex w-max gap-10"
             >
               {[...partners, ...partners].map((partner, idx) => (
                 <div key={idx} className="flex-shrink-0 flex items-center justify-center">
@@ -59,7 +65,7 @@ export default function PartnerMarquee({ locale }: PartnerMarqueeProps) {
                     alt={partner.name}
                     width={120}
                     height={40}
-                    className="h-8 md:h-10 w-auto object-contain opacity-60 hover:opacity-100 hover:scale-105 transition-all duration-300"
+                    className="h-7 md:h-9 w-auto object-contain opacity-50 hover:opacity-100 hover:scale-105 transition-all duration-300"
                     onError={(e) => {
                       (e.target as HTMLImageElement).style.display = 'none';
                     }}
