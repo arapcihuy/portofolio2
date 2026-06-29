@@ -1,80 +1,217 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { galleryData } from "@/lib/data"
+import { useRef } from "react"
+import { motion, useScroll, useTransform } from "framer-motion"
 import Image from "next/image"
-import TextReveal from "@/components/TextReveal"
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
+import { translations, translatedExperience } from "@/lib/translations"
 
-export default function About() {
+interface AboutProps {
+  locale: "EN" | "ID"
+}
+
+export default function About({ locale }: AboutProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const scrollContainerRef = useRef<HTMLDivElement>(null)
+  
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  })
+
+  const scale = useTransform(scrollYProgress, [0, 0.5], [0.8, 1])
+  const opacity = useTransform(scrollYProgress, [0, 0.3], [0, 1])
+
+  const t = (key: string) => {
+    return translations[key]?.[locale] || key
+  }
+
+  const experience = translatedExperience(locale)
+
+  const scrollGallery = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const amount = 300
+      scrollContainerRef.current.scrollBy({
+        left: direction === "left" ? -amount : amount,
+        behavior: "smooth",
+      })
+    }
+  }
+
   return (
-    <section className="py-32 border-t border-gray-100 dark:border-gray-900">
-      <div className="flex flex-col md:flex-row gap-20 mb-24">
-        <div className="md:w-1/3">
-          <motion.h2 
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="text-sm font-mono tracking-widest uppercase text-gray-500"
-          >
-            [ 01 — About Me ]
-          </motion.h2>
-        </div>
+    <section id="about" ref={containerRef} className="w-full bg-black py-12 sm:py-16 md:py-20 text-white overflow-hidden">
+      {/* Hero Image with Text Overlay (non-sticky to avoid layout gaps) */}
+      <div className="relative h-[60vh] w-full max-w-7xl mx-auto mb-16 overflow-hidden rounded-3xl bg-neutral-900">
+        <Image 
+          src="/portfolio/gallery_11.jpg" 
+          alt="Collaborate background" 
+          fill 
+          className="object-cover opacity-30" 
+          priority
+        />
         
-        <div className="md:w-2/3 space-y-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl md:text-5xl font-medium leading-tight tracking-tight"
-          >
-            <TextReveal text="I'm a Frontend Developer specializing in React, Next.js, and TypeScript to build interfaces that feel as good as they look." />
-          </motion.div>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-12 text-lg text-gray-600 dark:text-gray-400 leading-relaxed font-light"
-          >
-            <p>
-              With 3+ years of experience, I've bridged the gap between complex engineering and human-centered design. 
-              My approach is rooted in precision, ensuring every animation and pixel serves a purpose.
-            </p>
-            <p>
-              I believe that great software is made in the details. From performance optimization to smooth 
-              micro-interactions, I strive to create products that leave a lasting impression.
-            </p>
-          </motion.div>
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
+          <p className="text-lg sm:text-2xl mb-4 font-light tracking-widest text-zinc-400 uppercase">{t("about.collaborate")}</p>
+          <p className="text-3xl sm:text-6xl md:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-500">
+            {t("about.built")}
+          </p>
         </div>
       </div>
 
-      {/* Activity Gallery */}
-      <div className="mt-12">
-        <div className="flex flex-col md:flex-row gap-6 overflow-hidden">
-          {galleryData.map((item, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="relative w-full md:w-1/3 aspect-[16/10] group overflow-hidden rounded-2xl bg-gray-900"
+      {/* Gallery Carousel with prev/next arrows */}
+      <div className="w-full mb-10 overflow-hidden">
+        <div className="flex items-center justify-between px-4 sm:px-8 md:px-12 lg:px-16 mb-4">
+          <motion.span
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-sm font-mono tracking-widest uppercase text-zinc-500"
+          >
+            Gallery
+          </motion.span>
+          <div className="flex gap-2">
+            <button
+              onClick={() => scrollGallery("left")}
+              className="p-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
             >
-              <Image
-                src={item.image}
-                alt={item.alt}
-                fill
-                className="object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+              <ChevronLeft size={18} className="text-white" />
+            </button>
+            <button
+              onClick={() => scrollGallery("right")}
+              className="p-2 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-colors cursor-pointer"
+            >
+              <ChevronRight size={18} className="text-white" />
+            </button>
+          </div>
+        </div>
+        <div
+          ref={scrollContainerRef}
+          className="flex gap-4 overflow-x-auto px-4 sm:px-8 md:px-12 lg:px-16 pb-4 scrollbar-hide snap-x snap-mandatory"
+        >
+          {[
+            "/portfolio/gallery_1.jpg",
+            "/portfolio/gallery_2.jpg",
+            "/portfolio/gallery_3.jpg",
+            "/portfolio/gallery_4.jpg",
+            "/portfolio/gallery_5.jpg",
+            "/portfolio/gallery_6.jpg",
+          ].map((src, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              className="relative flex-shrink-0 w-48 h-64 sm:w-56 sm:h-72 md:w-64 md:h-80 rounded-2xl overflow-hidden bg-zinc-900 border border-white/5 snap-center"
+            >
+              <Image 
+                src={src} 
+                alt={`Gallery ${i + 1}`} 
+                fill 
+                className="object-cover transition-transform duration-500 hover:scale-110" 
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex items-end p-8">
-                <span className="text-white font-mono text-xs uppercase tracking-tighter opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                  {item.title}
-                </span>
-              </div>
             </motion.div>
           ))}
+        </div>
+      </div>
+
+      {/* Profile Info + Project Descriptions */}
+      <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+        {/* Profile — fadeInUp on scroll */}
+        <div>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-3xl sm:text-5xl font-bold mb-8"
+          >
+            {t("about.hi")}
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="text-zinc-400 text-lg leading-relaxed mb-8"
+          >
+            {t("about.bio")}
+          </motion.p>
+          
+          {/* Learn more link with arrow */}
+          <motion.a
+            href="#projects"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="group inline-flex items-center gap-2 text-sm font-medium text-white/70 hover:text-white transition-colors mb-8"
+          >
+            {t("about.learn_more")}
+            <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
+          </motion.a>
+          
+          {/* Education */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="border-t border-white/10 pt-8 space-y-6"
+          >
+            <div className="flex gap-4">
+              <div className="relative w-12 h-12 rounded-lg overflow-hidden bg-white/5 border border-white/10 flex-shrink-0 flex items-center justify-center">
+                <span className="text-white/40 text-xs font-bold">UII</span>
+              </div>
+              <div>
+                <h4 className="font-semibold text-lg">Universitas Islam Indonesia</h4>
+                <p className="text-sm text-zinc-400">Bachelor of Informatics</p>
+                <p className="text-xs text-zinc-500">Sep 2021 – Present</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Project Descriptions */}
+        <div>
+          <motion.h3
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="text-xl font-bold mb-6 text-zinc-300"
+          >
+            {t("about.selected_work")}
+          </motion.h3>
+          <div className="space-y-6">
+            {experience.map((item, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                className="border-b border-white/10 pb-6 last:border-0"
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-8 h-8 rounded-md overflow-hidden bg-white/5 border border-white/10 flex-shrink-0 flex items-center justify-center">
+                    <span className="text-white/50 text-[10px] font-bold">
+                      {item.title.charAt(0)}
+                    </span>
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-white text-sm">{item.title}</h4>
+                    <p className="text-xs text-zinc-500">{item.period}</p>
+                  </div>
+                  <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/5 text-zinc-400 border border-white/10">
+                    {item.type}
+                  </span>
+                </div>
+                <p className="text-sm text-zinc-400 leading-relaxed ml-11">
+                  {item.description}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

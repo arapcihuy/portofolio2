@@ -1,91 +1,70 @@
 "use client"
 
 import { motion } from "framer-motion"
+import Link from "next/link"
 import Image from "next/image"
+import { translations } from "@/lib/translations"
 
-import TextReveal from "@/components/TextReveal"
-import ParticleSignature from "@/components/ParticleSignature"
+interface HeroProps {
+  locale: "EN" | "ID"
+}
 
-export default function Hero() {
+export default function Hero({ locale }: HeroProps) {
+  const t = (key: string) => {
+    return translations[key]?.[locale] || key
+  }
+
   return (
-    <section className="min-h-[90vh] flex flex-col justify-center px-6 py-20 relative overflow-hidden bg-white dark:bg-[#0a0a0a]">
-      {/* 1. 3D Cyber Grid Background */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#0000001a_1px,transparent_1px),linear-gradient(to_bottom,#0000001a_1px,transparent_1px)] dark:bg-[linear-gradient(to_right,#ffffff10_1px,transparent_1px),linear-gradient(to_bottom,#ffffff10_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] z-0" />
+    <section id="main-content" className="relative w-full h-screen bg-black overflow-hidden selection:bg-zinc-800">
+      {/* Background Image (hayhasan style) */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/portfolio/hero-bg.jpg"
+          alt="Developer workstation background"
+          fill
+          className="object-cover opacity-20 scale-[1.05]"
+          priority
+        />
+        {/* Glow overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_50%,rgba(0,0,0,0.8))]" />
+      </div>
       
-      {/* 2. Profile Photo - Full Width, positioned right */}
-      <div className="absolute inset-0 z-[5] pointer-events-none">
-        <motion.div
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1.2, ease: "easeOut" }}
-          className="relative w-full h-full"
+      {/* Main Text — staggered fadeInUp */}
+      <div className="absolute bottom-[15%] left-0 right-0 z-10 pointer-events-none">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+          className="font-black text-white text-center leading-[0.8] tracking-[-0.02em]"
+          style={{ fontSize: "clamp(4rem, 15vw, 12rem)", fontFamily: "'Arial Black', Arial, sans-serif" }}
         >
-          <Image
-            src="/profile.png"
-            alt="Profile"
-            fill
-            className="object-cover object-right-top"
-            priority
-          />
+          RASYID
         </motion.div>
       </div>
 
-      {/* Left gradient overlay - smooth fade ke foto */}
-      <div className="absolute inset-0 z-10 bg-gradient-to-r from-white from-30% via-white/60 via-50% to-transparent dark:from-[#0a0a0a] dark:from-30% dark:via-[#0a0a0a]/60 dark:via-50% dark:to-transparent pointer-events-none" />
-
-
-
-      {/* 3. Completely Neat Geometric Hero Animation (Rapi) */}
-      <div className="absolute top-0 right-0 w-full h-full z-10 overflow-hidden pointer-events-none opacity-50 mix-blend-screen flex items-center justify-end pr-20 md:pr-40">
-        <motion.div
-          className="absolute w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-blue-500/10 dark:bg-blue-600/20 rounded-full blur-[100px]"
-          animate={{ scale: [1, 1.1, 1], opacity: [0.3, 0.6, 0.3] }}
-          transition={{ duration: 8, repeat: Infinity, ease: [0.25, 1, 0.5, 1] }}
-        />
-        
-        <motion.svg
-          viewBox="0 0 100 100"
-          className="absolute w-[600px] h-[600px] md:w-[900px] md:h-[900px] text-gray-200 dark:text-gray-800 opacity-20"
-          animate={{ rotate: 360 }}
-          transition={{ repeat: Infinity, duration: 60, ease: [0.16, 1, 0.3, 1] }}
+      {/* Side descriptions — staggered fadeInUp */}
+      <div className="absolute left-8 top-[40%] z-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
+          className="text-[11px] text-white leading-[1.4] tracking-[0.5px] uppercase opacity-80 max-w-[150px]"
         >
-          <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" strokeWidth="0.2" strokeDasharray="2 4" />
-          <circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" strokeWidth="0.1" />
-        </motion.svg>
-
-        <motion.svg
-          viewBox="0 0 100 100"
-          className="absolute w-[400px] h-[400px] md:w-[600px] md:h-[600px] text-blue-500/10 dark:text-blue-500/5"
-          animate={{ rotate: -360 }}
-          transition={{ repeat: Infinity, duration: 40, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <circle cx="50" cy="50" r="40" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="10 5" />
-          <circle cx="10" cy="50" r="1.5" fill="currentColor" />
-          <circle cx="90" cy="50" r="1.5" fill="currentColor" />
-        </motion.svg>
+          {t("hero.role1")}<br/>
+          {t("hero.role2")}<br/><br/>
+        </motion.div>
       </div>
 
-      {/* 4. Signature Moment: Interactive Particle Field */}
-      <ParticleSignature />
-
-      <div className="relative z-20 w-full max-w-6xl mx-auto flex flex-col items-center md:items-start text-center md:text-left">
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-col md:flex-row items-center gap-4">
-            <h1 className="text-7xl md:text-9xl lg:text-[180px] font-bold leading-[0.9] tracking-[-0.05em] text-black dark:text-white">
-              <TextReveal text="Hi, I'm Rasyid" />
-            </h1>
-          </div>
-
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="text-lg md:text-2xl text-gray-700 dark:text-gray-300 max-w-2xl leading-relaxed font-light drop-shadow-sm"
-          >
-            Frontend Developer — UI/UX Designer. Focusing on building high-performance, 
-            visually stunning web experiences with precision and care.
-          </motion.p>
-        </div>
+      <div className="absolute right-8 top-[40%] z-10">
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
+          className="text-[11px] text-white leading-[1.4] tracking-[0.5px] uppercase opacity-80 max-w-[150px] text-right"
+        >
+          {t("hero.tagline")}<br/>
+        </motion.div>
       </div>
     </section>
   )

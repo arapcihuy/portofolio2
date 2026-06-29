@@ -10,9 +10,6 @@ export const metadata = {
   generator: 'v0.dev'
 }
 
-import GrainOverlay from "@/components/GrainOverlay"
-import SmoothScroll from "@/components/SmoothScroll"
-
 export default function RootLayout({
   children,
 }: {
@@ -25,10 +22,7 @@ export default function RootLayout({
         <link rel="shortcut icon" type="image/png" href="/logo.png?v=3" />
       </head>
       <body className={inter.className}>
-        <GrainOverlay />
-        <SmoothScroll>
-          {children}
-        </SmoothScroll>
+        {children}
       </body>
     </html>
   )

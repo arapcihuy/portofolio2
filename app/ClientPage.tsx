@@ -1,92 +1,51 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Sun, Moon } from "lucide-react"
 import Hero from "@/components/sections/Hero"
 import About from "@/components/sections/About"
 import Projects from "@/components/sections/Projects"
-import Experience from "@/components/sections/Experience"
 import Contact from "@/components/sections/Contact"
-import Marquee from "@/components/sections/Marquee"
-import ScrollVideoReveal from "@/components/sections/ScrollVideoReveal"
-import CustomCursor from "@/components/CustomCursor"
-import Preloader from "@/components/Preloader"
-import { motion, AnimatePresence } from "framer-motion"
+import PartnerMarquee from "@/components/sections/PartnerMarquee"
+import Gallery from "@/components/sections/Gallery"
+import Navbar from "@/components/sections/Navbar"
+import SmoothScroll from "@/components/SmoothScroll"
 
 export default function ClientPage() {
-  const [isDark, setIsDark] = useState(true)
-  const [isLoading, setIsLoading] = useState(true)
   const [mounted, setMounted] = useState(false)
+  const [locale, setLocale] = useState<"EN" | "ID">("EN")
 
   useEffect(() => {
     setMounted(true)
-    const savedTheme = localStorage.getItem("theme")
-    if (savedTheme === "light") {
-      setIsDark(false)
-      document.documentElement.classList.remove("dark")
-    } else {
-      document.documentElement.classList.add("dark")
-    }
+    document.documentElement.classList.add("dark") // Force dark mode
   }, [])
-
-  const toggleTheme = () => {
-    const newTheme = !isDark
-    setIsDark(newTheme)
-    
-    if (newTheme) {
-      // Switch to dark mode
-      document.documentElement.classList.add("dark")
-      localStorage.setItem("theme", "dark")
-    } else {
-      // Switch to light mode
-      document.documentElement.classList.remove("dark")
-      localStorage.setItem("theme", "light")
-    }
-  }
 
   if (!mounted) return null
 
   return (
-    <main className="min-h-screen bg-white dark:bg-[#0a0a0a] transition-colors duration-500">
-      <CustomCursor />
-      
-      <AnimatePresence>
-        {isLoading && (
-          <Preloader onComplete={() => setIsLoading(false)} />
-        )}
-      </AnimatePresence>
-
-      <div className={`transition-opacity duration-200 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
-        {/* Floating Navigation */}
-        <nav className="fixed top-8 right-8 z-50 flex items-center gap-4">
-          <button
-            onClick={toggleTheme}
-            className="p-3 rounded-full border border-gray-100 dark:border-white/10 bg-white/50 dark:bg-black/50 backdrop-blur-xl transition-all hover:scale-110 active:scale-95"
-          >
-            {isDark ? (
-              <Moon size={20} className="text-white" />
-            ) : (
-              <Sun size={20} className="text-black" />
-            )}
-          </button>
-        </nav>
-
-        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
-          <Hero />
+    <SmoothScroll>
+      <main className="min-h-screen bg-[#0a0a0a]">
+        <div className="transition-opacity duration-200">
+          <Navbar locale={locale} setLocale={setLocale} />
+          {/* Sections: Hero → PartnerMarquee → Projects → About → Gallery → Contact */}
+          <div className="w-full">
+            <Hero locale={locale} />
+            <PartnerMarquee locale={locale} />
+          </div>
+          
+          <div className="w-full">
+            <Projects locale={locale} />
+          </div>
+          <div className="w-full">
+            <About locale={locale} />
+          </div>
+          <div className="w-full">
+            <Gallery locale={locale} />
+          </div>
+          <div className="w-full">
+            <Contact locale={locale} />
+          </div>
         </div>
-        
-        <ScrollVideoReveal />
-
-        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
-          <About />
-          <Projects />
-          <Experience />
-        </div>
-        <Marquee />
-        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
-          <Contact />
-        </div>
-      </div>
-    </main>
+      </main>
+    </SmoothScroll>
   )
 }
