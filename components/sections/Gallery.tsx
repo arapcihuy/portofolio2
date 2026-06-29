@@ -86,7 +86,7 @@ export default function Gallery({ locale }: GalleryProps) {
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: idx * 0.05, duration: 0.5 }}
-                className="relative flex-shrink-0 w-64 h-80 md:w-80 md:h-[400px] rounded-2xl overflow-hidden bg-zinc-900 border border-white/5 snap-center cursor-pointer group"
+                className="relative flex-shrink-0 w-64 h-80 md:w-80 md:h-[400px] rounded-2xl overflow-hidden snap-center cursor-pointer group liquid-glass-card"
                 onClick={() => setSelectedIndex(idx)}
               >
                 <img

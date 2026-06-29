@@ -107,7 +107,7 @@ export default function Projects({ locale }: ProjectsProps) {
 
         {/* Filters — BIG clickable */}
         <div className="flex justify-center w-full mb-10 md:mb-14 px-2">
-          <div className="flex items-center gap-2 p-2 rounded-2xl bg-zinc-900/80 backdrop-blur-2xl border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
+          <div className="flex items-center gap-2 p-2 rounded-2xl liquid-glass">
             {categories.map((cat) => (
               <button
                 key={cat}
@@ -250,7 +250,7 @@ export default function Projects({ locale }: ProjectsProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className="min-w-[260px] md:min-w-[340px] group cursor-pointer transition-all duration-300 hover:-translate-y-2"
+                className="min-w-[260px] md:min-w-[340px] group cursor-pointer transition-all duration-300 hover:-translate-y-2 liquid-glass-card rounded-2xl overflow-hidden"
               >
                 <div className="aspect-[3/2] overflow-hidden rounded-xl bg-white/5 mb-3 relative">
                   {item.isVideo ? (

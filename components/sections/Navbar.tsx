@@ -82,7 +82,7 @@ export default function Navbar({ locale, setLocale }: NavbarProps) {
             </button>
             <a 
               href="/cv.pdf" 
-              className="px-4 py-2 rounded-md button bg-white text-black text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
+              className="px-5 py-2.5 rounded-full bg-white text-black text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition-all duration-300 inline-block text-center liquid-glass-btn hover:shadow-[0_0_30px_rgba(255,255,255,0.3)]"
             >
               {t("nav.download")}
             </a>
