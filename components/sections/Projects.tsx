@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useRef } from "react"
+import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from "framer-motion"
 import Image from "next/image"
 import { translations, translatedProjects } from "@/lib/translations"
 
@@ -9,45 +9,91 @@ interface ProjectsProps {
   locale: "EN" | "ID"
 }
 
-// SVG Laptop Mockup Component
-function LaptopMockup({ children }: { children: React.ReactNode }) {
+// 3D Laptop Mockup
+function LaptopMockup({ children, mouseX, mouseY }: { children: React.ReactNode; mouseX: any; mouseY: any }) {
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [8, -8]), { stiffness: 200, damping: 20 })
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-8, 8]), { stiffness: 200, damping: 20 })
+
   return (
-    <div className="relative">
+    <motion.div style={{ rotateX, rotateY, transformStyle: "preserve-3d" }} className="relative">
+      {/* Screen glow */}
+      <div className="absolute -inset-4 bg-blue-500/10 blur-3xl rounded-full" />
       {/* Laptop Screen */}
-      <div className="relative bg-[#1a1a2e] rounded-t-xl border-2 border-b-0 border-zinc-700 p-2 pb-0">
-        {/* Camera notch */}
-        <div className="absolute top-1 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-zinc-600" />
-        <div className="relative bg-white rounded-t-lg overflow-hidden aspect-[16/10]">
-          {children}
+      <div className="relative bg-gradient-to-b from-zinc-700 to-zinc-900 rounded-t-xl border border-zinc-600 p-3 pb-0 shadow-[0_0_40px_rgba(0,0,0,0.5)]">
+        {/* Camera */}
+        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-zinc-500 shadow-inner" />
+        {/* Screen bezel */}
+        <div className="relative bg-black rounded-t-lg overflow-hidden aspect-[16/10] border border-zinc-800">
+          {/* Screen content */}
+          <div className="relative w-full h-full">
+            {children}
+          </div>
+          {/* Screen reflection */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
         </div>
       </div>
       {/* Laptop Base */}
-      <div className="relative h-3 bg-gradient-to-b from-zinc-600 to-zinc-800 rounded-b-xl mx-[-8px]">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-16 h-1 bg-zinc-500 rounded-b-lg" />
+      <div className="relative h-4 bg-gradient-to-b from-zinc-500 via-zinc-600 to-zinc-800 rounded-b-xl mx-[-12px] shadow-lg">
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-1.5 bg-zinc-400 rounded-b-lg shadow-inner" />
+        {/* Trackpad hint */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-0.5 bg-zinc-500/50 rounded-full" />
       </div>
-      {/* Laptop Bottom */}
-      <div className="h-1 bg-zinc-900 rounded-b-lg mx-[-16px]" />
-    </div>
+      {/* Bottom shadow */}
+      <div className="h-2 bg-gradient-to-b from-zinc-900 to-black rounded-b-2xl mx-[-20px]" />
+    </motion.div>
   )
 }
 
-// SVG Phone Mockup Component
-function PhoneMockup({ children }: { children: React.ReactNode }) {
+// 3D Phone Mockup
+function PhoneMockup({ children, mouseX, mouseY }: { children: React.ReactNode; mouseX: any; mouseY: any }) {
+  const rotateX = useSpring(useTransform(mouseY, [-0.5, 0.5], [10, -10]), { stiffness: 200, damping: 20 })
+  const rotateY = useSpring(useTransform(mouseX, [-0.5, 0.5], [-12, 12]), { stiffness: 200, damping: 20 })
+
   return (
-    <div className="relative">
-      <div className="relative bg-zinc-800 rounded-[2rem] border-4 border-zinc-700 p-2 shadow-2xl">
+    <motion.div style={{ rotateX, rotateY, transformStyle: "preserve-3d" }} className="relative">
+      {/* Phone glow */}
+      <div className="absolute -inset-6 bg-purple-500/10 blur-3xl rounded-full" />
+      <div className="relative bg-gradient-to-b from-zinc-600 to-zinc-900 rounded-[2.5rem] border-2 border-zinc-500 p-2.5 shadow-[0_0_50px_rgba(0,0,0,0.6)]">
+        {/* Side buttons */}
+        <div className="absolute right-[-2px] top-24 w-[3px] h-8 bg-zinc-500 rounded-r-sm" />
+        <div className="absolute left-[-2px] top-20 w-[3px] h-6 bg-zinc-500 rounded-l-sm" />
+        <div className="absolute left-[-2px] top-30 w-[3px] h-10 bg-zinc-500 rounded-l-sm" />
         {/* Dynamic Island */}
-        <div className="absolute top-3 left-1/2 -translate-x-1/2 w-20 h-5 bg-black rounded-full z-10" />
-        <div className="relative bg-white rounded-[1.5rem] overflow-hidden aspect-[9/19]">
-          {children}
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-10 shadow-inner" />
+        {/* Screen */}
+        <div className="relative bg-black rounded-[2rem] overflow-hidden aspect-[9/19] border border-zinc-700">
+          <div className="relative w-full h-full">
+            {children}
+          </div>
+          {/* Screen reflection */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/8 via-transparent to-transparent pointer-events-none" />
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }
 
 export default function Projects({ locale }: ProjectsProps) {
   const [activeCategory, setActiveCategory] = useState("SaaS Website")
+  const showcaseRef = useRef<HTMLDivElement>(null)
+
+  // Mouse tracking for 3D tilt
+  const mouseX = useMotionValue(0)
+  const mouseY = useMotionValue(0)
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!showcaseRef.current) return
+    const rect = showcaseRef.current.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width - 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5
+    mouseX.set(x)
+    mouseY.set(y)
+  }
+
+  const handleMouseLeave = () => {
+    mouseX.set(0)
+    mouseY.set(0)
+  }
 
   const t = (key: string) => {
     return translations[key]?.[locale] || key
@@ -101,34 +147,31 @@ export default function Projects({ locale }: ProjectsProps) {
           </p>
         </motion.div>
 
-        {/* Filters */}
+        {/* Filters — BIGGER, easier to click */}
         <div className="flex justify-center w-full mb-10 md:mb-14 px-2">
-          <div className="flex items-center gap-1 p-1.5 rounded-full bg-zinc-900/80 backdrop-blur-2xl border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.6)] ring-1 ring-white/5">
+          <div className="flex items-center gap-2 p-2 rounded-2xl bg-zinc-900/80 backdrop-blur-2xl border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className="relative min-w-[60px] md:min-w-[80px] px-3 md:px-4 h-9 md:h-11 rounded-full flex items-center justify-center text-[10px] md:text-xs font-medium focus:outline-none cursor-pointer"
+                className="relative px-5 md:px-6 py-3 md:py-3.5 rounded-xl flex items-center justify-center text-xs md:text-sm font-semibold focus:outline-none cursor-pointer transition-all duration-200 active:scale-95"
               >
                 {activeCategory === cat && (
                   <motion.div
                     layoutId="activeFilter"
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                    className="absolute inset-0 rounded-full bg-gradient-to-b from-white/10 to-white/5 shadow-inner"
+                    className="absolute inset-0 rounded-xl bg-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
                   />
                 )}
                 <span className={`relative z-10 transition-colors duration-300 ${activeCategory === cat ? 'text-white' : 'text-zinc-500 hover:text-zinc-300'}`}>
                   {cat}
                 </span>
-                {activeCategory === cat && (
-                  <span className="absolute -bottom-1 h-1 w-6 rounded-full bg-gradient-to-r from-transparent via-white/60 to-transparent" />
-                )}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Active Project Showcase with Device Frames */}
+        {/* Active Project Showcase with 3D Device Frames */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
@@ -138,39 +181,48 @@ export default function Projects({ locale }: ProjectsProps) {
             transition={{ duration: 0.5 }}
             className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12 w-full"
           >
-            {/* Device Mockups */}
-            <div className="relative flex items-center justify-center gap-4 lg:gap-6">
-              {/* Circular glow behind devices */}
+            {/* 3D Device Mockups — Interactive */}
+            <div 
+              ref={showcaseRef}
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              className="relative flex items-center justify-center gap-4 lg:gap-6 perspective-[1200px]"
+              style={{ perspective: "1200px" }}
+            >
+              {/* Circular rotating border */}
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
                 className="absolute inset-[-30%] rounded-full border border-dashed border-white/5"
               />
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-600/20 to-indigo-900/20 blur-3xl" />
+              {/* Glow behind */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-600/15 to-purple-600/15 blur-3xl" />
 
-              {/* Phone Mockup (behind laptop) */}
+              {/* Phone Mockup (behind, tilted) */}
               <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2, duration: 0.5 }}
+                initial={{ opacity: 0, x: -30, rotateY: -15 }}
+                animate={{ opacity: 1, x: 0, rotateY: -12 }}
+                transition={{ delay: 0.2, duration: 0.6 }}
                 className="relative z-0 hidden md:block"
+                style={{ transformStyle: "preserve-3d" }}
               >
-                <div className="w-32 lg:w-40 transform -rotate-6 hover:rotate-0 transition-transform duration-500">
-                  <PhoneMockup>
+                <div className="w-32 lg:w-40">
+                  <PhoneMockup mouseX={mouseX} mouseY={mouseY}>
                     <Image src={activeProjectMockup} alt={`${activeProject.title} mobile`} fill className="object-cover" />
                   </PhoneMockup>
                 </div>
               </motion.div>
 
-              {/* Laptop Mockup (front) */}
+              {/* Laptop Mockup (front, main) */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.1, duration: 0.5 }}
+                initial={{ opacity: 0, scale: 0.85, rotateY: 10 }}
+                animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                transition={{ delay: 0.1, duration: 0.6 }}
                 className="relative z-10"
+                style={{ transformStyle: "preserve-3d" }}
               >
-                <div className="w-64 sm:w-72 lg:w-96 hover:scale-105 transition-transform duration-500">
-                  <LaptopMockup>
+                <div className="w-64 sm:w-72 lg:w-96">
+                  <LaptopMockup mouseX={mouseX} mouseY={mouseY}>
                     {activeProject.isVideo ? (
                       <video src={activeProject.video} autoPlay loop muted playsInline className="w-full h-full object-cover" />
                     ) : (
