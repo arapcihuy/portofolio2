@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import { motion, useScroll, useTransform, useSpring } from "framer-motion"
+import { motion } from "framer-motion"
 import Image from "next/image"
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 import { translations, translatedExperience } from "@/lib/translations"
@@ -11,41 +11,7 @@ interface AboutProps {
 }
 
 export default function About({ locale }: AboutProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const collaborateRef = useRef<HTMLDivElement>(null)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
-  
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  })
-
-  // Collaborate section 3D scroll effects
-  const { scrollYProgress: collabProgress } = useScroll({
-    target: collaborateRef,
-    offset: ["start end", "end start"]
-  })
-
-  // Image scale: starts at 0.8, scales to 1.1 at center, back to 1
-  const collabScale = useSpring(
-    useTransform(collabProgress, [0, 0.5, 1], [0.85, 1.05, 1]),
-    { stiffness: 100, damping: 20 }
-  )
-  
-  // Image rotateX: starts tilted, flattens as you scroll
-  const collabRotateX = useSpring(
-    useTransform(collabProgress, [0, 0.5, 1], [8, 0, -4]),
-    { stiffness: 100, damping: 20 }
-  )
-  
-  // Image opacity: fades in
-  const collabOpacity = useTransform(collabProgress, [0, 0.3], [0, 1])
-  
-  // Text parallax: moves up faster than image
-  const textY = useTransform(collabProgress, [0, 0.5, 1], [60, 0, -30])
-  
-  // Image parallax: moves slower (background)
-  const imageY = useTransform(collabProgress, [0, 0.5, 1], [80, 0, -40])
 
   const t = (key: string) => {
     return translations[key]?.[locale] || key
@@ -64,39 +30,27 @@ export default function About({ locale }: AboutProps) {
   }
 
   return (
-    <section id="about" ref={containerRef} className="w-full bg-black py-12 sm:py-16 md:py-20 text-white overflow-hidden">
-      {/* Collaborate Hero — 3D scroll effect */}
-      <div ref={collaborateRef} className="relative w-full max-w-7xl mx-auto mb-16 px-4">
+    <section id="about" className="w-full bg-black py-12 sm:py-16 md:py-20 text-white overflow-hidden">
+      {/* Collaborate Hero — simple fade-in */}
+      <div className="relative w-full max-w-7xl mx-auto mb-16 px-4">
         <motion.div
-          style={{
-            scale: collabScale,
-            rotateX: collabRotateX,
-            opacity: collabOpacity,
-            perspective: 1200,
-            transformStyle: "preserve-3d",
-          }}
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
           className="relative h-[50vh] sm:h-[60vh] w-full overflow-hidden rounded-3xl bg-neutral-900 shadow-[0_0_80px_rgba(0,0,0,0.5)]"
         >
-          {/* Background image with parallax */}
-          <motion.div style={{ y: imageY }} className="absolute inset-[-10%]">
-            <Image 
-              src="/portfolio/gallery_11.jpg" 
-              alt="Collaborate background" 
-              fill 
-              className="object-cover opacity-40" 
-              priority
-            />
-          </motion.div>
-          
-          {/* Gradient overlays */}
+          <Image 
+            src="/portfolio/flut-hero.png" 
+            alt="Collaborate background" 
+            fill 
+            className="object-cover opacity-40" 
+            priority
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-transparent" />
           
-          {/* Text with parallax */}
-          <motion.div 
-            style={{ y: textY }} 
-            className="absolute inset-0 flex flex-col items-center justify-center text-center px-4"
-          >
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -115,14 +69,13 @@ export default function About({ locale }: AboutProps) {
             >
               {t("about.built")}
             </motion.p>
-          </motion.div>
+          </div>
           
-          {/* 3D border glow */}
           <div className="absolute inset-0 rounded-3xl border border-white/5 pointer-events-none" />
         </motion.div>
       </div>
 
-      {/* Gallery Carousel with prev/next arrows */}
+      {/* Gallery Carousel */}
       <div className="w-full mb-10 overflow-hidden">
         <div className="flex items-center justify-between px-4 sm:px-8 md:px-12 lg:px-16 mb-4">
           <motion.span
@@ -154,12 +107,12 @@ export default function About({ locale }: AboutProps) {
           className="flex gap-4 overflow-x-auto px-4 sm:px-8 md:px-12 lg:px-16 pb-4 scrollbar-hide snap-x snap-mandatory"
         >
           {[
-            "/portfolio/gallery_1.jpg",
-            "/portfolio/gallery_2.jpg",
-            "/portfolio/gallery_3.jpg",
-            "/portfolio/gallery_4.jpg",
-            "/portfolio/gallery_5.jpg",
-            "/portfolio/gallery_6.jpg",
+            "/portfolio/flut-chess.png",
+            "/portfolio/flut-hand-phone.png",
+            "/portfolio/flut-heads.png",
+            "/portfolio/flut-iphone.png",
+            "/portfolio/flut-logo.png",
+            "/portfolio/flut-hero.png",
           ].map((src, i) => (
             <motion.div
               key={i}
@@ -179,9 +132,8 @@ export default function About({ locale }: AboutProps) {
         </div>
       </div>
 
-      {/* Profile Info + Project Descriptions */}
+      {/* Profile + Experience */}
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-        {/* Profile — fadeInUp on scroll */}
         <div>
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
@@ -234,7 +186,6 @@ export default function About({ locale }: AboutProps) {
           </motion.div>
         </div>
 
-        {/* Project Descriptions */}
         <div>
           <motion.h3
             initial={{ opacity: 0, y: 30 }}
