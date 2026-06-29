@@ -105,14 +105,14 @@ export default function Projects({ locale }: ProjectsProps) {
           </p>
         </motion.div>
 
-        {/* Filters */}
+        {/* Filters — BIG clickable */}
         <div className="flex justify-center w-full mb-10 md:mb-14 px-2">
           <div className="flex items-center gap-2 p-2 rounded-2xl bg-zinc-900/80 backdrop-blur-2xl border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className="relative px-5 md:px-6 py-3 md:py-3.5 rounded-xl flex items-center justify-center text-xs md:text-sm font-semibold focus:outline-none cursor-pointer transition-all duration-200 active:scale-95"
+                className={`relative px-6 md:px-8 py-4 md:py-5 rounded-xl text-xs md:text-sm font-semibold cursor-pointer transition-all duration-200 active:scale-95 z-10 ${activeCategory === cat ? 'text-white' : 'text-zinc-500 hover:text-zinc-300'}`}
               >
                 {activeCategory === cat && (
                   <motion.div
@@ -121,9 +121,7 @@ export default function Projects({ locale }: ProjectsProps) {
                     className="absolute inset-0 rounded-xl bg-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
                   />
                 )}
-                <span className={`relative z-10 transition-colors duration-300 ${activeCategory === cat ? 'text-white' : 'text-zinc-500 hover:text-zinc-300'}`}>
-                  {cat}
-                </span>
+                <span className="relative z-20">{cat}</span>
               </button>
             ))}
           </div>
