@@ -6,15 +6,15 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { translations } from "@/lib/translations"
 
 const galleryImages = [
-  { src: "/portfolio/flut-hero.png", alt: "Flut Hero - Visual Head Dots" },
-  { src: "/portfolio/flut-iphone.png", alt: "Flut iPhone Mockup" },
-  { src: "/portfolio/flut-chess.png", alt: "Flut Chess Pieces" },
-  { src: "/portfolio/flut-hand-phone.png", alt: "Flut Hand Phone" },
-  { src: "/portfolio/flut-heads.png", alt: "Flut Neural Heads" },
-  { src: "/portfolio/flut-logo.png", alt: "Flut Logo" },
-  { src: "/portfolio/cimeds-screenshot.jpg", alt: "CIMEDs Portal" },
-  { src: "/portfolio/cbs-portal.jpg", alt: "CBS Company Profile" },
-  { src: "/portfolio/rumbel-website.jpg", alt: "Rumbeldirgantara Website" },
+  { src: "/portfolio/uiux-1.jpg", alt: "UI Design System" },
+  { src: "/portfolio/uiux-2.jpg", alt: "UX Wireframe" },
+  { src: "/portfolio/uiux-3.jpg", alt: "Mobile UI Design" },
+  { src: "/portfolio/uiux-4.jpg", alt: "Dashboard Design" },
+  { src: "/portfolio/uiux-5.jpg", alt: "Design System" },
+  { src: "/portfolio/uiux-6.jpg", alt: "Color Palette" },
+  { src: "/portfolio/uiux-7.jpg", alt: "Mobile App UI" },
+  { src: "/portfolio/uiux-8.jpg", alt: "Analytics Dashboard" },
+  { src: "/portfolio/flut-iphone.png", alt: "Flut App Mockup" },
 ]
 
 interface GalleryProps {
