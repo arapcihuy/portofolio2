@@ -3,7 +3,7 @@ import { Home, Instagram, Github, Linkedin, Twitter, Mail } from "lucide-react"
 export const experienceData = [
   {
     title: "Flut Technology (Cybersecurity Team)",
-    logo: "/portfolio/flut-app.jpg",
+    logo: "/portfolio/flut-logo.png",
     bgColor: "bg-white",
     type: "Work",
     role: "Cybersecurity Specialist",
@@ -78,19 +78,19 @@ export const skillsData = {
 
 export const galleryData = [
   {
-    image: "https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&q=80&w=1000",
-    title: "Deep Focus Sessions",
-    alt: "Developer desk at night"
+    image: "/portfolio/flut-hero.png",
+    title: "Flut Hero",
+    alt: "Flut Visual Head Dots"
   },
   {
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=1000",
-    title: "Wireframing Concepts",
-    alt: "Notepad with UI sketches"
+    image: "/portfolio/flut-iphone.png",
+    title: "Flut iPhone Mockup",
+    alt: "Flut App on iPhone"
   },
   {
-    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=1000",
-    title: "Architecture Design",
-    alt: "Nexus Analytics Dashboard Mockup"
+    image: "/portfolio/flut-chess.png",
+    title: "Flut Chess Strategy",
+    alt: "Strategic thinking"
   }
 ]
 

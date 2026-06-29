@@ -55,7 +55,7 @@ export const translations: { [key: string]: { EN: string; ID: string } } = {
 export const translatedExperience = (locale: "EN" | "ID") => [
   {
     title: "Flut Technology (Cybersecurity Team)",
-    logo: "/portfolio/flut-app.jpg",
+    logo: "/portfolio/flut-logo.png",
     bgColor: "bg-white",
     type: locale === "EN" ? "Work" : "Pekerjaan",
     role: locale === "EN" ? "Cybersecurity Specialist" : "Spesialis Keamanan Siber",
