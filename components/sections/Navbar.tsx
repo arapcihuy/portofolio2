@@ -36,7 +36,7 @@ export default function Navbar({ locale, setLocale }: NavbarProps) {
   }
 
   return (
-    <header role="banner" className="fixed top-0 inset-x-0 z-50 w-full flex justify-center px-4 py-4 md:py-6 pointer-events-none">
+    <header role="banner" className="fixed top-0 inset-x-0 z-[100] w-full flex justify-center px-4 py-4 md:py-6 pointer-events-none">
       {/* Desktop & Mobile Combined Floating Navbar */}
       <motion.div
         animate={{
