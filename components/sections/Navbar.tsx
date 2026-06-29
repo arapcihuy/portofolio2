@@ -40,16 +40,22 @@ export default function Navbar({ locale, setLocale }: NavbarProps) {
       {/* Desktop & Mobile Combined Floating Navbar */}
       <motion.div
         animate={{
-          y: isScrolled ? 10 : 0,
-          width: isScrolled ? "90%" : "100%",
+          y: isScrolled ? 20 : 0,
+          width: isScrolled ? "40%" : "100%",
           maxWidth: isScrolled ? "900px" : "1200px",
         }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        style={{
+          backdropFilter: isScrolled ? "blur(10px)" : "none",
+          boxShadow: isScrolled 
+            ? "rgba(34, 42, 53, 0.06) 0px 0px 24px, rgba(0, 0, 0, 0.05) 0px 1px 1px, rgba(34, 42, 53, 0.04) 0px 0px 0px 1px, rgba(34, 42, 53, 0.08) 0px 0px 4px, rgba(47, 48, 55, 0.05) 0px 16px 68px, rgba(255, 255, 255, 0.1) 0px 1px 0px inset"
+            : "none",
+        }}
         className={`pointer-events-auto flex flex-col items-center justify-between rounded-full border transition-all duration-300 ${
           isScrolled 
-            ? "bg-black/60 backdrop-blur-md border-white/10 shadow-[0_0_24px_rgba(255,255,255,0.03)]" 
+            ? "bg-black/60 border-white/10" 
             : "bg-transparent border-transparent"
-        } px-6 py-3 w-full relative`}
+        } px-4 md:px-6 py-2 md:py-3 w-full relative`}
       >
         <div className="flex w-full flex-row items-center justify-between">
           {/* Logo */}
@@ -58,7 +64,7 @@ export default function Navbar({ locale, setLocale }: NavbarProps) {
             <span className="font-semibold text-white tracking-wide">Rasyid</span>
           </Link>
 
-          {/* Desktop Navigation Links - Centered absolutely */}
+          {/* Desktop Navigation Links - Centered absolutely (hayhasan exact) */}
           <div className="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center space-x-2 text-sm font-medium text-white/70">
             <Link href="#about" className="relative px-4 py-2 transition-colors text-white hover:text-white/80">
               <span>{t("nav.about")}</span>
@@ -72,16 +78,16 @@ export default function Navbar({ locale, setLocale }: NavbarProps) {
           </div>
 
           {/* Desktop Right Side CTA & Lang Toggle */}
-          <div className="hidden lg:flex items-center gap-4 shrink-0">
+          <div className="hidden lg:flex items-center gap-3 shrink-0">
             <button 
               onClick={toggleLocale}
-              className="relative px-3 py-1.5 rounded-md text-xs font-semibold text-white/80 bg-white/10 hover:bg-white/20 border border-white/20 transition-all cursor-pointer active:scale-95"
+              className="relative px-3 py-1.5 rounded-md text-xs font-semibold text-white/80 bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/30 transition-all cursor-pointer active:scale-95"
             >
               <span>{locale}</span>
             </button>
             <a 
               href="/cv.pdf" 
-              className="px-5 py-2.5 rounded-full bg-white text-black text-xs font-bold hover:-translate-y-0.5 shadow-lg active:scale-95 transition-all duration-200"
+              className="px-4 py-2 rounded-md bg-white text-black text-sm font-bold relative cursor-pointer hover:-translate-y-0.5 transition duration-200 inline-block text-center shadow-[0_0_24px_rgba(34,_42,_53,_0.06),_0_1px_1px_rgba(0,_0,_0,_0.05),_0_0_0_1px_rgba(34,_42,_53,_0.04),_0_0_4px_rgba(34,_42,_53,_0.08),_0_16px_68px_rgba(47,_48,_55,_0.05),_0_1px_0_rgba(255,_255,_255,_0.1)_inset]"
             >
               {t("nav.download")}
             </a>
