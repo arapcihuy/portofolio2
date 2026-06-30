@@ -31,24 +31,23 @@ export default function About({ locale }: AboutProps) {
 
   return (
     <section id="about" className="w-full bg-black py-12 sm:py-16 md:py-20 text-white overflow-hidden">
-      {/* Collaborate Hero — simple fade-in */}
+      {/* Collaborate Hero — simple card like hayhasan */}
       <div className="relative w-full max-w-7xl mx-auto mb-16 px-4">
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="relative h-[50vh] sm:h-[60vh] w-full overflow-hidden rounded-3xl bg-neutral-900 shadow-[0_0_80px_rgba(0,0,0,0.5)]"
+          className="relative h-[50vh] sm:h-[60vh] w-full overflow-hidden rounded-3xl bg-neutral-900"
         >
           <Image 
             src="/portfolio/flut-hero.png" 
             alt="Collaborate background" 
             fill 
-            className="object-cover opacity-40" 
+            className="object-cover opacity-30" 
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
           
           <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
             <motion.p 
@@ -56,7 +55,7 @@ export default function About({ locale }: AboutProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="text-lg sm:text-2xl mb-4 font-light tracking-widest text-zinc-400 uppercase"
+              className="text-base sm:text-lg mb-3 font-light tracking-widest text-zinc-400 uppercase"
             >
               {t("about.collaborate")}
             </motion.p>
@@ -65,13 +64,11 @@ export default function About({ locale }: AboutProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-zinc-200 to-zinc-500"
+              className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight text-white"
             >
               {t("about.built")}
             </motion.p>
           </div>
-          
-          <div className="absolute inset-0 rounded-3xl border border-white/5 pointer-events-none" />
         </motion.div>
       </div>
 

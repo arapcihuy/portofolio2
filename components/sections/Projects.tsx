@@ -9,6 +9,17 @@ interface ProjectsProps {
   locale: "EN" | "ID"
 }
 
+// Gallery images per project category
+const projectGalleries: { [key: string]: { img1: string; img2: string } } = {
+  "Security": { img1: "/portfolio/flut-iphone.png", img2: "/portfolio/flut-chess.png" },
+  "SaaS Website": { img1: "/portfolio/cimeds-screenshot.jpg", img2: "/portfolio/flut-hero.png" },
+  "e-Commerce": { img1: "/portfolio/uiux-1.jpg", img2: "/portfolio/uiux-4.jpg" },
+  "CMS Website": { img1: "/portfolio/cbs-portal.jpg", img2: "/portfolio/rumbel-website.jpg" },
+  "Monitoring System": { img1: "/portfolio/uiux-7.jpg", img2: "/portfolio/flut-hand-phone.png" },
+  "Keamanan": { img1: "/portfolio/flut-iphone.png", img2: "/portfolio/flut-chess.png" },
+  "Sistem Monitoring": { img1: "/portfolio/uiux-7.jpg", img2: "/portfolio/flut-hand-phone.png" },
+}
+
 export default function Projects({ locale }: ProjectsProps) {
   const [activeCategory, setActiveCategory] = useState("SaaS Website")
 
@@ -38,11 +49,11 @@ export default function Projects({ locale }: ProjectsProps) {
 
   const activeProjectName = categoryMap[activeCategory] || "CIMEDs / PT Ontiyus Karya Mulia"
   const activeProject = projects.find(p => p.title === activeProjectName) || projects[0]
-  const activeProjectMockup = activeProject.image || "/Tangkapan Layar 2025-06-13 pukul 16.43.20.png"
+  const activeProjectMockup = activeProject.image || "/portfolio/cimeds-screenshot.jpg"
+  const gallery = projectGalleries[activeCategory] || { img1: activeProjectMockup, img2: "/portfolio/flut-logo.png" }
 
   return (
     <section id="projects" className="w-full bg-black text-zinc-100 overflow-hidden py-12 md:py-20">
-      {/* Background glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0" style={{ background: "radial-gradient(circle at 0% 50%, rgba(59, 130, 246, 0.12), transparent 50%)" }}></div>
       </div>
@@ -64,7 +75,7 @@ export default function Projects({ locale }: ProjectsProps) {
           </p>
         </motion.div>
 
-        {/* Filters — pill buttons exactly like hayhasan */}
+        {/* Filters — pill buttons */}
         <div className="flex justify-center w-full mb-10 md:mb-14 px-2">
           <div className="flex items-center gap-1 p-1 rounded-full bg-zinc-900/60 border border-white/5">
             {categories.map((cat) => (
@@ -83,7 +94,7 @@ export default function Projects({ locale }: ProjectsProps) {
           </div>
         </div>
 
-        {/* Active Project Showcase — exactly like hayhasan */}
+        {/* Active Project Showcase */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
@@ -93,19 +104,14 @@ export default function Projects({ locale }: ProjectsProps) {
             transition={{ duration: 0.5 }}
             className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 w-full"
           >
-            {/* Circular Mockup with Laptop — LEFT side */}
+            {/* Circular Mockup with Laptop — LEFT */}
             <div className="relative flex-shrink-0 w-[320px] h-[320px] md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px]">
-              {/* Circular container */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-600/20 via-blue-900/30 to-indigo-900/20 border border-blue-500/20 shadow-[0_0_60px_rgba(59,130,246,0.15)]" />
-              
-              {/* Rotating border */}
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
                 className="absolute inset-[-5%] rounded-full border border-dashed border-blue-500/10"
               />
-
-              {/* Inner glow */}
               <div className="absolute inset-8 rounded-full bg-gradient-to-br from-blue-500/5 to-transparent" />
 
               {/* Laptop inside circle */}
@@ -116,9 +122,7 @@ export default function Projects({ locale }: ProjectsProps) {
                   transition={{ delay: 0.2, duration: 0.6 }}
                   className="w-full"
                 >
-                  {/* MacBook */}
                   <div className="relative">
-                    {/* Screen */}
                     <div className="bg-gradient-to-b from-zinc-600 to-zinc-800 rounded-t-xl p-[6px] pb-0 shadow-lg">
                       <div className="absolute top-[6px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-zinc-500" />
                       <div className="relative bg-white rounded-t-lg overflow-hidden aspect-[16/10]">
@@ -130,7 +134,6 @@ export default function Projects({ locale }: ProjectsProps) {
                         <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
                       </div>
                     </div>
-                    {/* Base */}
                     <div className="h-2.5 bg-gradient-to-b from-zinc-500 to-zinc-700 rounded-b-lg mx-[-6px]">
                       <div className="mx-auto w-12 h-1 bg-zinc-400/50 rounded-b-md" />
                     </div>
@@ -139,7 +142,6 @@ export default function Projects({ locale }: ProjectsProps) {
                 </motion.div>
               </div>
 
-              {/* Project link badge below circle */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -153,7 +155,7 @@ export default function Projects({ locale }: ProjectsProps) {
               </motion.div>
             </div>
 
-            {/* Description — RIGHT side */}
+            {/* Description — RIGHT */}
             <div className="w-full max-w-md text-left">
               <h2 className="text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-zinc-500 mb-2">
                 {activeCategory}
@@ -165,18 +167,18 @@ export default function Projects({ locale }: ProjectsProps) {
                 {activeProject.description}
               </p>
 
-              {/* Gallery thumbnails — like hayhasan */}
+              {/* Gallery — 2 DIFFERENT thumbnails */}
               <div className="w-full">
                 <span className="text-[10px] md:text-xs font-medium text-zinc-500 uppercase tracking-wider">Gallery</span>
                 <div className="flex gap-3 mt-3">
                   <div className="group relative w-28 h-28 lg:w-32 lg:h-32 rounded-xl overflow-hidden bg-zinc-900/60 border border-white/5 hover:border-white/20 transition-all duration-300 cursor-pointer">
-                    <Image src={activeProjectMockup} alt="Gallery 1" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <Image src={gallery.img1} alt="Gallery 1" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
                       <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View</span>
                     </div>
                   </div>
                   <div className="group relative w-28 h-28 lg:w-32 lg:h-32 rounded-xl overflow-hidden bg-zinc-900/60 border border-white/5 hover:border-white/20 transition-all duration-300 cursor-pointer">
-                    <Image src="/portfolio/flut-logo.png" alt="Gallery 2" fill className="object-contain p-3 transition-transform duration-500 group-hover:scale-110" />
+                    <Image src={gallery.img2} alt="Gallery 2" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
                     <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
                       <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View</span>
                     </div>
@@ -187,7 +189,7 @@ export default function Projects({ locale }: ProjectsProps) {
           </motion.div>
         </AnimatePresence>
 
-        {/* All Projects Section */}
+        {/* All Projects */}
         <div className="mt-20 md:mt-32 border-t border-white/10 pt-12 md:pt-16">
           <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between">
             <div>
