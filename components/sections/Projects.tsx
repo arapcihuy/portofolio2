@@ -110,7 +110,7 @@ export default function Projects({ locale }: ProjectsProps) {
             transition={{ duration: 0.5 }}
             className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 w-full"
           >
-            {/* Circular Mockup — LEFT (clean, no CSS 3D) */}
+            {/* Circular Mockup — LEFT (laptop frame) */}
             <div className="relative group shrink-0">
               {/* Rotating dashed border ring */}
               <motion.div
@@ -132,27 +132,47 @@ export default function Projects({ locale }: ProjectsProps) {
                   style={{ y: mockupY }}
                   className="relative z-10 w-full h-full flex items-center justify-center"
                 >
-                  {/* Project image — clean, no laptop frame */}
-                  <div className="relative w-[85%] h-[85%] rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] border border-white/10">
-                    {activeProject.isVideo ? (
-                      <video 
-                        src={activeProject.video} 
-                        autoPlay 
-                        loop 
-                        muted 
-                        playsInline 
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <img 
-                        src={activeProjectMockup} 
-                        alt={activeProject.title} 
-                        className="w-full h-full object-cover"
-                        draggable="false"
-                      />
-                    )}
-                    {/* Subtle overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+                  {/* MacBook-style laptop with SVG frame */}
+                  <div className="relative w-[85%] md:w-[90%]" style={{ filter: 'drop-shadow(0 20px 50px rgba(0,0,0,0.5))' }}>
+                    {/* Laptop screen (lid) */}
+                    <div className="relative bg-gradient-to-b from-zinc-200 via-zinc-300 to-zinc-400 rounded-t-xl sm:rounded-t-2xl p-[3px] sm:p-[5px]">
+                      {/* Camera dot */}
+                      <div className="absolute top-[5px] left-1/2 -translate-x-1/2 w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-zinc-500/60 z-20" />
+                      {/* Screen bezel */}
+                      <div className="relative bg-black rounded-t-lg sm:rounded-t-xl p-[2px] sm:p-[3px]">
+                        {/* Screen content */}
+                        <div className="relative bg-white rounded-t-md sm:rounded-t-lg overflow-hidden aspect-[16/10]">
+                          {activeProject.isVideo ? (
+                            <video 
+                              src={activeProject.video} 
+                              autoPlay 
+                              loop 
+                              muted 
+                              playsInline 
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <img 
+                              src={activeProjectMockup} 
+                              alt={activeProject.title} 
+                              className="w-full h-full object-cover"
+                              draggable="false"
+                            />
+                          )}
+                          {/* Screen glare */}
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none" />
+                        </div>
+                      </div>
+                    </div>
+                    {/* Laptop base (keyboard) */}
+                    <div className="bg-gradient-to-b from-zinc-300 via-zinc-400 to-zinc-500 rounded-b-xl sm:rounded-b-2xl mx-[-1px] sm:mx-[-2px] shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
+                      {/* Hinge */}
+                      <div className="h-[1px] bg-zinc-200/60" />
+                      {/* Keyboard */}
+                      <div className="h-2 sm:h-3 mx-2 sm:mx-4 mt-0.5 bg-zinc-400/20 rounded-sm" />
+                      {/* Trackpad */}
+                      <div className="h-0.5 sm:h-1 bg-zinc-300/30 rounded-full mx-auto w-8 sm:w-12 mb-1.5 sm:mb-2" />
+                    </div>
                   </div>
                 </motion.div>
               </div>
