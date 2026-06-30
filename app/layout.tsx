@@ -1,8 +1,5 @@
 import type React from "react"
 import "@/app/globals.css"
-import { Inter } from "next/font/google"
-
-const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
   title: "Rasyid Achmad - Frontend Developer",
@@ -21,7 +18,7 @@ export default function RootLayout({
         <link rel="icon" type="image/png" href="/logo.png?v=3" />
         <link rel="shortcut icon" type="image/png" href="/logo.png?v=3" />
       </head>
-      <body className={inter.className}>
+      <body className="antialiased text-zinc-100 bg-[#0a0a0a]" style={{ fontFamily: 'system-ui, -apple-system, "system-ui", "Segoe UI", Roboto, sans-serif' }}>
         {children}
       </body>
     </html>
