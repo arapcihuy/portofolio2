@@ -42,16 +42,17 @@ export default function Navbar({ locale, setLocale }: NavbarProps) {
         <motion.div
           animate={{
             y: isScrolled ? 20 : 0,
-            width: isScrolled ? "40%" : "100%",
+            width: isScrolled ? "min(90%, 800px)" : "100%",
           }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
           style={{
-            minWidth: isScrolled ? "800px" : "0px",
+            minWidth: isScrolled ? "min(90%, 800px)" : "0px",
+            maxWidth: isScrolled ? "800px" : "none",
             backdropFilter: isScrolled ? "blur(10px)" : "blur(0px)",
             boxShadow: isScrolled ? scrolledShadow : defaultShadow,
             backgroundColor: isScrolled ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0)",
           }}
-          className="pointer-events-auto relative z-[60] mx-auto flex flex-row items-center justify-between self-start rounded-full px-4 py-2 w-full border-0"
+          className="pointer-events-auto relative z-[60] mx-auto flex flex-row items-center justify-between self-start rounded-full px-3 sm:px-4 py-2 w-full border-0"
         >
           {/* Logo */}
           <Link href="#" className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal transition-colors text-white">
@@ -106,7 +107,7 @@ export default function Navbar({ locale, setLocale }: NavbarProps) {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="lg:hidden overflow-hidden mt-2 mx-4 bg-black/80 backdrop-blur-xl rounded-2xl border border-white/10"
+            className="lg:hidden overflow-hidden mt-2 mx-4 bg-black/80 backdrop-blur-xl rounded-3xl border border-white/10"
           >
             <div className="flex flex-col space-y-1 p-4">
               <Link 
