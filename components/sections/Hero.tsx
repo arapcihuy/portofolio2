@@ -48,7 +48,7 @@ export default function Hero({ locale }: HeroProps) {
         initial={{ opacity: 0, x: -30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.6 }}
-        className="absolute left-8 top-[40%] z-10"
+        className="absolute left-8 top-[40%] z-10 pointer-events-none"
       >
         <div className="text-[11px] text-white leading-[1.4] tracking-[0.5px] uppercase opacity-80 max-w-[150px]">
           {t("hero.role1")}<br/>
@@ -61,7 +61,7 @@ export default function Hero({ locale }: HeroProps) {
         initial={{ opacity: 0, x: 30 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }}
-        className="absolute right-8 top-[40%] z-10"
+        className="absolute right-8 top-[40%] z-10 pointer-events-none"
       >
         <div className="text-[11px] text-white leading-[1.4] tracking-[0.5px] uppercase opacity-80 max-w-[150px] text-right">
           {t("hero.tagline")}<br/>
