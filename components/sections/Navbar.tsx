@@ -39,20 +39,15 @@ export default function Navbar({ locale, setLocale }: NavbarProps) {
     <header role="banner" className="fixed top-0 inset-x-0 z-[100] w-full pointer-events-none">
       <div className="flex justify-center px-4 py-4 md:py-6">
         {/* Navbar pill — exact hayhasan behavior */}
-        <motion.div
-          animate={{
-            y: isScrolled ? 20 : 0,
-            width: isScrolled ? "min(90%, 800px)" : "100%",
-          }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+        <div
+          className="pointer-events-auto relative z-[60] mx-auto flex flex-row items-center justify-between self-start rounded-full px-3 sm:px-4 py-2 w-full border-0 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
           style={{
-            minWidth: isScrolled ? "min(90%, 800px)" : "0px",
-            maxWidth: isScrolled ? "800px" : "none",
+            maxWidth: isScrolled ? "min(90%, 800px)" : "100%",
+            transform: `translateY(${isScrolled ? 20 : 0}px)`,
             backdropFilter: isScrolled ? "blur(10px)" : "blur(0px)",
             boxShadow: isScrolled ? scrolledShadow : defaultShadow,
             backgroundColor: isScrolled ? "rgba(0,0,0,0.6)" : "rgba(0,0,0,0)",
           }}
-          className="pointer-events-auto relative z-[60] mx-auto flex flex-row items-center justify-between self-start rounded-full px-3 sm:px-4 py-2 w-full border-0"
         >
           {/* Logo */}
           <Link href="#" className="relative z-20 mr-4 flex items-center space-x-2 px-2 py-1 text-sm font-normal transition-colors text-white">
@@ -97,7 +92,7 @@ export default function Navbar({ locale, setLocale }: NavbarProps) {
           >
             {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
-        </motion.div>
+        </div>
       </div>
 
       {/* Mobile Dropdown Menu */}
