@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef } from "react"
-import { motion, useScroll, useTransform, useSpring } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import Image from "next/image"
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react"
 import { translations, translatedExperience } from "@/lib/translations"
@@ -12,7 +12,7 @@ interface AboutProps {
 
 export default function About({ locale }: AboutProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
-  const collaborateRef = useRef<HTMLDivElement>(null)
+  const collaborateContainerRef = useRef<HTMLDivElement>(null)
 
   const t = (key: string) => {
     return translations[key]?.[locale] || key
@@ -20,23 +20,19 @@ export default function About({ locale }: AboutProps) {
 
   const experience = translatedExperience(locale)
 
-  // Scroll-linked 3D for "Built for all of us"
+  // Scroll setup matching hayhasan
   const { scrollYProgress } = useScroll({
-    target: collaborateRef,
+    target: collaborateContainerRef,
     offset: ["start end", "end start"]
   })
 
-  const rawScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.85, 1.05, 1])
-  const scale = useSpring(rawScale, { stiffness: 200, damping: 25 })
-
-  const rawRotateX = useTransform(scrollYProgress, [0, 0.5, 1], [8, 0, -4])
-  const rotateX = useSpring(rawRotateX, { stiffness: 200, damping: 25 })
-
-  const rawY = useTransform(scrollYProgress, [0, 1], [60, -60])
-  const y = useSpring(rawY, { stiffness: 200, damping: 25 })
-
-  const rawImageY = useTransform(scrollYProgress, [0, 1], [30, -30])
-  const imageY = useSpring(rawImageY, { stiffness: 200, damping: 25 })
+  // Exact hayhasan ranges:
+  // scale(0.92) to scale(1)
+  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 0.9])
+  
+  // translateY from 250px to -250px and opacity fade
+  const textY = useTransform(scrollYProgress, [0, 0.5, 1], [150, 0, -150])
+  const textOpacity = useTransform(scrollYProgress, [0, 0.25, 0.5, 0.75, 1], [0, 0.5, 1, 0.5, 0])
 
   const scrollGallery = (direction: "left" | "right") => {
     if (scrollContainerRef.current) {
@@ -50,48 +46,42 @@ export default function About({ locale }: AboutProps) {
 
   return (
     <section id="about" className="w-full bg-black py-12 sm:py-16 md:py-20 text-white overflow-hidden">
-      {/* Collaborate Hero — 3D scroll effect */}
-      <div className="relative w-full max-w-7xl mx-auto mb-16 px-4">
-        <motion.div
-          ref={collaborateRef}
-          style={{ scale, rotateX, perspective: 1200 }}
-          className="relative h-[50vh] sm:h-[60vh] w-full overflow-hidden rounded-3xl bg-neutral-900"
+      {/* Collaborate Section — Exactly matching hayhasan.my.id sticky scroll parallax */}
+      <div 
+        ref={collaborateContainerRef}
+        className="relative h-[65vh] sm:h-[75vh] md:h-[80vh] w-full max-w-7xl mx-auto mb-16 px-4"
+      >
+        {/* Sticky wrapper for image */}
+        <motion.div 
+          style={{ scale }}
+          className="sticky top-0 z-0 h-full w-full overflow-hidden rounded-xl sm:rounded-2xl md:rounded-3xl bg-neutral-950"
         >
-          <motion.div style={{ y: imageY }} className="absolute inset-[-10%]">
-            <Image 
-              src="/portfolio/flut-hero.png" 
-              alt="Collaborate background" 
-              fill 
-              className="object-cover opacity-30" 
-              priority
-            />
-          </motion.div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
-          
-          <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4">
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="text-base sm:text-lg mb-3 font-light tracking-widest text-zinc-400 uppercase"
-            >
-              {t("about.collaborate")}
-            </motion.p>
-            <motion.p 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight text-white"
-            >
-              {t("about.built")}
-            </motion.p>
-          </div>
+          <Image 
+            src="/portfolio/flut-hero.png" 
+            alt="Collaborate background" 
+            fill 
+            className="object-cover opacity-35" 
+            priority
+          />
+          {/* Exact hayhasan backdrop-filter overlay */}
+          <div className="absolute inset-0 bg-neutral-950/60 dark:bg-neutral-950/70" />
+        </motion.div>
+
+        {/* Parallax moving text container over sticky wrapper */}
+        <motion.div 
+          style={{ y: textY, opacity: textOpacity }}
+          className="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center px-4 text-white pointer-events-none z-10"
+        >
+          <p className="mb-2 text-center text-lg sm:text-xl md:mb-4 md:text-3xl font-light tracking-widest text-zinc-400 uppercase">
+            {t("about.collaborate")}
+          </p>
+          <h2 className="text-center text-3xl font-bold sm:text-4xl md:text-6xl lg:text-7xl tracking-tight">
+            {t("about.built")}
+          </h2>
         </motion.div>
       </div>
 
-      {/* Gallery Carousel — mixed images */}
+      {/* Gallery Carousel */}
       <div className="w-full mb-10 overflow-hidden">
         <div className="flex items-center justify-between px-4 sm:px-8 md:px-12 lg:px-16 mb-4">
           <motion.span
