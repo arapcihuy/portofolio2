@@ -19,81 +19,23 @@ const projectGalleries: { [key: string]: string[] } = {
   "Sistem Monitoring": ["/portfolio/uiux-7.jpg", "/portfolio/flut-hand-phone.png", "/portfolio/uiux-3.jpg"],
 }
 
-/* Isometric MacBook — CSS 2D skew for 3D illusion, no clipping */
-function IsometricLaptop({ image, isVideo, videoSrc }: { image: string; isVideo?: boolean; videoSrc?: string }) {
+/* MacBook 3D — pre-rendered 3D render per category */
+function MacbookFrame({ screen }: { screen: string }) {
   return (
-    <div className="relative w-full flex items-center justify-center" style={{ 
-      transform: 'perspective(1000px) rotateX(8deg) rotateY(-10deg)',
-      transformStyle: 'preserve-3d'
-    }}>
+    <div className="relative w-full flex items-center justify-center select-none">
       {/* Ground shadow */}
-      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-[120%] h-10 bg-black/25 rounded-[100%] blur-2xl" />
-      
-      {/* Laptop container */}
-      <div className="relative" style={{ transformStyle: 'preserve-3d' }}>
-        {/* === SCREEN (LID) === */}
-        <div style={{ transform: 'translateZ(12px)', transformStyle: 'preserve-3d' }}>
-          {/* Lid back */}
-          <div 
-            className="absolute inset-0 rounded-t-xl lg:rounded-t-2xl"
-            style={{ 
-              background: 'linear-gradient(135deg, #e4e4e7 0%, #d4d4d8 50%, #a1a1aa 100%)',
-              transform: 'translateZ(-1px)'
-            }} 
-          />
-          {/* Lid frame */}
-          <div 
-            className="relative rounded-t-xl lg:rounded-t-2xl p-[3px] lg:p-[5px]"
-            style={{ 
-              background: 'linear-gradient(180deg, #e4e4e7 0%, #d4d4d8 30%, #a1a1aa 100%)',
-              boxShadow: '0 -2px 15px rgba(0,0,0,0.1)'
-            }}
-          >
-            {/* Camera */}
-            <div className="absolute top-[5px] left-1/2 -translate-x-1/2 w-1 h-1 lg:w-1.5 lg:h-1.5 rounded-full bg-zinc-500/50 z-20" />
-            {/* Bezel */}
-            <div className="bg-zinc-900 rounded-t-lg lg:rounded-t-xl p-[2px] lg:p-[3px]">
-              {/* Screen content */}
-              <div className="relative bg-white rounded-t-md lg:rounded-t-lg overflow-hidden aspect-[16/10]">
-                {isVideo ? (
-                  <video src={videoSrc} autoPlay loop muted playsInline className="w-full h-full object-cover" />
-                ) : (
-                  <img src={image} alt="" className="w-full h-full object-cover" draggable="false" />
-                )}
-                {/* Glare */}
-                <div className="absolute inset-0 pointer-events-none" style={{ 
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 40%)' 
-                }} />
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* === BASE (KEYBOARD) === */}
-        <div style={{ transform: 'translateZ(6px)', transformStyle: 'preserve-3d' }}>
-          {/* Base top surface */}
-          <div 
-            className="relative mx-[-2px] rounded-b-xl lg:rounded-b-2xl p-[2px]"
-            style={{ 
-              background: 'linear-gradient(180deg, #d4d4d8 0%, #a1a1aa 40%, #71717a 100%)',
-              boxShadow: '0 10px 40px rgba(0,0,0,0.4)'
-            }}
-          >
-            {/* Hinge */}
-            <div className="h-[1px] bg-gradient-to-r from-transparent via-zinc-300 to-transparent" />
-            {/* Keyboard */}
-            <div className="h-2.5 lg:h-3.5 mx-3 lg:mx-5 mt-0.5 rounded-sm" style={{ 
-              background: 'linear-gradient(180deg, #52525b 0%, #3f3f46 100%)' 
-            }} />
-            {/* Trackpad */}
-            <div className="h-[3px] bg-zinc-400/30 rounded-full mx-auto w-8 lg:w-14 mb-1.5 lg:mb-2" />
-          </div>
-          {/* Base front edge */}
-          <div className="h-[3px] mx-[-2px] rounded-b-xl lg:rounded-b-2xl" style={{ 
-            background: 'linear-gradient(180deg, #71717a 0%, #52525b 100%)' 
-          }} />
-        </div>
-      </div>
+      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[80%] h-8 bg-black/30 rounded-[100%] blur-xl" />
+      {/* Soft glow behind laptop */}
+      <div
+        className="absolute inset-0 m-auto w-[70%] h-[60%] rounded-full blur-3xl opacity-20"
+        style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.5) 0%, transparent 70%)' }}
+      />
+      <img
+        src={screen}
+        alt="MacBook Pro 3D"
+        className="w-full h-auto drop-shadow-2xl relative z-10"
+        draggable={false}
+      />
     </div>
   )
 }
@@ -128,7 +70,16 @@ export default function Projects({ locale }: ProjectsProps) {
 
   const activeProjectName = categoryMap[activeCategory] || "CIMEDs / PT Ontiyus Karya Mulia"
   const activeProject = projects.find(p => p.title === activeProjectName) || projects[0]
-  const activeProjectMockup = activeProject.image || "/portfolio/cimeds-screenshot.jpg"
+  const categoryScreenshots: { [key: string]: string } = {
+    "Security": "/portfolio/macbook-3d-security.png",
+    "Keamanan": "/portfolio/macbook-3d-security.png",
+    "SaaS Website": "/portfolio/macbook-3d-saas.png",
+    "e-Commerce": "/portfolio/macbook-3d-ecommerce.png",
+    "CMS Website": "/portfolio/macbook-3d-cms.png",
+    "Monitoring System": "/portfolio/macbook-3d-monitoring.png",
+    "Sistem Monitoring": "/portfolio/macbook-3d-monitoring.png",
+  }
+  const activeProjectMockup = categoryScreenshots[activeCategory] || activeProject.image || "/portfolio/cimeds-screenshot.jpg"
   const gallery = projectGalleries[activeCategory] || [activeProjectMockup, "/portfolio/flut-logo.png", "/portfolio/uiux-1.jpg"]
 
   const { scrollYProgress } = useScroll({
@@ -211,11 +162,7 @@ export default function Projects({ locale }: ProjectsProps) {
                   style={{ y: mockupY }}
                   className="relative z-10 w-[80%] lg:w-[85%]"
                 >
-                  <IsometricLaptop 
-                    image={activeProjectMockup} 
-                    isVideo={activeProject.isVideo} 
-                    videoSrc={activeProject.video} 
-                  />
+                  <MacbookFrame screen={activeProjectMockup} />
                 </motion.div>
               </div>
 

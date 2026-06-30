@@ -143,6 +143,24 @@ export default function About({ locale }: AboutProps) {
       {/* Profile + Experience */}
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         <div>
+          {/* Profile photo */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative w-48 h-48 sm:w-56 sm:h-56 mb-8 rounded-2xl overflow-hidden"
+          >
+            <Image
+              src="/portfolio/profile-rasyid.png"
+              alt="Rasyid Achmad"
+              fill
+              className="object-cover object-top"
+            />
+            {/* Subtle glow border */}
+            <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10" />
+          </motion.div>
+
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
