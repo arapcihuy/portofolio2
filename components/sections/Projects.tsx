@@ -112,7 +112,7 @@ export default function Projects({ locale }: ProjectsProps) {
           >
             {/* Circular Mockup — LEFT (exactly like hayhasan) */}
             <div className="relative group shrink-0">
-              {/* Rotating dashed border ring — inset-[-20%] */}
+              {/* Rotating dashed border ring */}
               <motion.div
                 style={{ rotate: borderRotate }}
                 className="absolute inset-[-20%] rounded-full border border-dashed border-white/10 border-l-blue-500/50 pointer-events-none"
@@ -124,7 +124,7 @@ export default function Projects({ locale }: ProjectsProps) {
                 className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-600 to-indigo-900 blur-2xl opacity-40 pointer-events-none"
               />
 
-              {/* Circular frame — overflow visible, NO clipping */}
+              {/* Circular frame — overflow visible */}
               <div className="relative h-48 w-48 sm:h-64 sm:w-64 md:h-80 md:w-80 lg:h-[450px] lg:w-[450px] rounded-full border border-white/5 shadow-2xl flex items-center justify-center overflow-visible bg-black/20 backdrop-blur-sm">
                 
                 {/* Parallax wrapper */}
@@ -132,15 +132,12 @@ export default function Projects({ locale }: ProjectsProps) {
                   style={{ y: mockupY }}
                   className="relative z-10 w-full h-full flex items-center justify-center"
                 >
-                  {/* Isometric MacBook — flat image with 3D CSS */}
-                  <div className="relative w-[85%] md:w-[90%]" style={{ perspective: '1200px' }}>
-                    {/* MacBook lid */}
-                    <div 
-                      className="relative bg-gradient-to-b from-zinc-200 via-zinc-300 to-zinc-400 rounded-t-xl sm:rounded-t-2xl p-[4px] sm:p-[6px] shadow-[0_-5px_30px_rgba(0,0,0,0.3)]"
-                      style={{ transform: 'rotateX(15deg) rotateY(-5deg)' }}
-                    >
+                  {/* MacBook-style laptop — clean flat render */}
+                  <div className="relative w-[75%] md:w-[80%]" style={{ filter: 'drop-shadow(0 20px 50px rgba(0,0,0,0.5))' }}>
+                    {/* Screen (lid) */}
+                    <div className="relative bg-gradient-to-b from-zinc-200 via-zinc-300 to-zinc-400 rounded-t-xl sm:rounded-t-2xl p-[3px] sm:p-[5px]">
                       {/* Camera dot */}
-                      <div className="absolute top-[6px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-zinc-500/60 z-20" />
+                      <div className="absolute top-[5px] left-1/2 -translate-x-1/2 w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-zinc-500/60 z-20" />
                       {/* Screen bezel */}
                       <div className="relative bg-black rounded-t-lg sm:rounded-t-xl p-[2px] sm:p-[3px]">
                         {/* Screen content */}
@@ -155,17 +152,14 @@ export default function Projects({ locale }: ProjectsProps) {
                         </div>
                       </div>
                     </div>
-                    {/* MacBook base (keyboard) */}
-                    <div 
-                      className="bg-gradient-to-b from-zinc-300 via-zinc-400 to-zinc-500 rounded-b-xl sm:rounded-b-2xl mx-[-2px] sm:mx-[-3px] shadow-[0_10px_40px_rgba(0,0,0,0.4)]"
-                      style={{ transform: 'rotateX(15deg) rotateY(-5deg)', transformOrigin: 'top center' }}
-                    >
-                      {/* Hinge line */}
-                      <div className="h-[1px] bg-zinc-200/80" />
-                      {/* Keyboard area */}
-                      <div className="h-2 sm:h-3 mx-3 sm:mx-5 mt-1 bg-zinc-400/30 rounded-sm" />
+                    {/* Base (keyboard) */}
+                    <div className="bg-gradient-to-b from-zinc-300 via-zinc-400 to-zinc-500 rounded-b-xl sm:rounded-b-2xl mx-[-1px] sm:mx-[-2px] shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
+                      {/* Hinge */}
+                      <div className="h-[1px] bg-zinc-200/60" />
+                      {/* Keyboard */}
+                      <div className="h-2 sm:h-3 mx-2 sm:mx-4 mt-0.5 bg-zinc-400/20 rounded-sm" />
                       {/* Trackpad */}
-                      <div className="h-1 sm:h-1.5 bg-zinc-300/40 rounded-full mx-auto w-10 sm:w-16 mb-2 sm:mb-3" />
+                      <div className="h-0.5 sm:h-1 bg-zinc-300/30 rounded-full mx-auto w-8 sm:w-12 mb-1.5 sm:mb-2" />
                     </div>
                   </div>
                 </motion.div>
