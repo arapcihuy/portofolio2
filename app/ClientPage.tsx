@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import Hero from "@/components/sections/Hero"
 import About from "@/components/sections/About"
 import Projects from "@/components/sections/Projects"
+import Certificates from "@/components/sections/Certificates"
 import Contact from "@/components/sections/Contact"
 import PartnerMarquee from "@/components/sections/PartnerMarquee"
 import Gallery from "@/components/sections/Gallery"
@@ -34,6 +35,9 @@ export default function ClientPage() {
           
           <div className="w-full">
             <Projects locale={locale} />
+          </div>
+          <div className="w-full">
+            <Certificates locale={locale} />
           </div>
           <div className="w-full">
             <About locale={locale} />
