@@ -18,7 +18,7 @@ export default function RootLayout({
         <link rel="icon" type="image/png" href="/logo.png?v=3" />
         <link rel="shortcut icon" type="image/png" href="/logo.png?v=3" />
       </head>
-      <body className="antialiased text-zinc-100 bg-[#0a0a0a]" style={{ fontFamily: 'system-ui, -apple-system, "system-ui", "Segoe UI", Roboto, sans-serif' }}>
+      <body suppressHydrationWarning className="antialiased text-zinc-100 bg-[#0a0a0a]" style={{ fontFamily: 'system-ui, -apple-system, "system-ui", "Segoe UI", Roboto, sans-serif' }}>
         {children}
       </body>
     </html>
