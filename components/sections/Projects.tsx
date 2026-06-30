@@ -19,16 +19,20 @@ const projectGalleries: { [key: string]: string[] } = {
   "Sistem Monitoring": ["/portfolio/uiux-7.jpg", "/portfolio/flut-hand-phone.png", "/portfolio/uiux-3.jpg"],
 }
 
-/* Clean flat MacBook — no CSS 3D, just a clean device frame */
-function LaptopMockup({ image, isVideo, videoSrc }: { image: string; isVideo?: boolean; videoSrc?: string }) {
+/* Isometric MacBook using 2D transforms — no clipping, clean look */
+function IsometricLaptop({ image, isVideo, videoSrc }: { image: string; isVideo?: boolean; videoSrc?: string }) {
   return (
-    <div className="relative w-full flex items-center justify-center">
-      <div className="relative w-full max-w-[320px] lg:max-w-[420px]">
-        {/* Shadow underneath */}
-        <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[90%] h-6 bg-black/30 rounded-[100%] blur-xl" />
+    <div className="relative w-full flex items-center justify-center" style={{ transform: 'scale(0.9)' }}>
+      {/* Isometric wrapper — 2D skew for 3D illusion */}
+      <div style={{ 
+        transform: 'perspective(800px) rotateX(10deg) rotateY(-12deg)',
+        transformStyle: 'flat'
+      }}>
+        {/* Ground shadow */}
+        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[100%] h-8 bg-black/20 rounded-[100%] blur-xl" />
         
         {/* Screen (lid) */}
-        <div className="relative bg-gradient-to-b from-zinc-200 via-zinc-300 to-zinc-400 rounded-t-xl lg:rounded-t-2xl p-[3px] lg:p-[5px]">
+        <div className="relative bg-gradient-to-b from-zinc-200 via-zinc-300 to-zinc-400 rounded-t-xl lg:rounded-t-2xl p-[3px] lg:p-[5px] shadow-[0_-2px_20px_rgba(0,0,0,0.15)]">
           {/* Camera */}
           <div className="absolute top-[5px] left-1/2 -translate-x-1/2 w-1 h-1 lg:w-1.5 lg:h-1.5 rounded-full bg-zinc-500/50 z-20" />
           {/* Bezel */}
@@ -42,18 +46,18 @@ function LaptopMockup({ image, isVideo, videoSrc }: { image: string; isVideo?: b
               )}
               {/* Glare */}
               <div className="absolute inset-0 pointer-events-none" style={{ 
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 40%)' 
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%)' 
               }} />
             </div>
           </div>
         </div>
         
         {/* Base (keyboard) */}
-        <div className="bg-gradient-to-b from-zinc-300 via-zinc-400 to-zinc-500 rounded-b-xl lg:rounded-b-2xl mx-[-1px] shadow-[0_10px_40px_rgba(0,0,0,0.4)]">
+        <div className="bg-gradient-to-b from-zinc-300 via-zinc-400 to-zinc-500 rounded-b-xl lg:rounded-b-2xl mx-[-1px] shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
           {/* Hinge */}
           <div className="h-[1px] bg-zinc-200/60" />
-          {/* Keyboard */}
-          <div className="h-2 lg:h-3 mx-3 lg:mx-5 mt-0.5 bg-zinc-500/20 rounded-sm" />
+          {/* Keyboard area */}
+          <div className="h-2.5 lg:h-3.5 mx-3 lg:mx-5 mt-0.5 bg-zinc-500/20 rounded-sm" />
           {/* Trackpad */}
           <div className="h-[3px] bg-zinc-300/30 rounded-full mx-auto w-8 lg:w-14 mb-1.5 lg:mb-2" />
         </div>
@@ -173,9 +177,9 @@ export default function Projects({ locale }: ProjectsProps) {
                 {/* Parallax wrapper */}
                 <motion.div 
                   style={{ y: mockupY }}
-                  className="relative z-10 w-[75%] lg:w-[80%]"
+                  className="relative z-10 w-[80%] lg:w-[85%]"
                 >
-                  <LaptopMockup 
+                  <IsometricLaptop 
                     image={activeProjectMockup} 
                     isVideo={activeProject.isVideo} 
                     videoSrc={activeProject.video} 
