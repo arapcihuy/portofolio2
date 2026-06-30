@@ -19,6 +19,85 @@ const projectGalleries: { [key: string]: string[] } = {
   "Sistem Monitoring": ["/portfolio/uiux-7.jpg", "/portfolio/flut-hand-phone.png", "/portfolio/uiux-3.jpg"],
 }
 
+/* Stylized 3D MacBook — clean, vector-ish, like hayhasan's mockuppostmatic.png */
+function LaptopMockup({ image, isVideo, videoSrc }: { image: string; isVideo?: boolean; videoSrc?: string }) {
+  return (
+    <div className="relative w-full h-full flex items-center justify-center">
+      {/* 3D container */}
+      <div style={{ perspective: '600px' }} className="relative">
+        <div style={{ transform: 'rotateX(12deg) rotateY(-8deg)', transformStyle: 'preserve-3d' }}>
+          
+          {/* === SCREEN (LID) === */}
+          <div style={{ transform: 'translateZ(8px)', transformStyle: 'preserve-3d' }}>
+            {/* Lid back — aluminum */}
+            <div 
+              className="absolute inset-0 rounded-t-xl sm:rounded-t-2xl"
+              style={{ 
+                background: 'linear-gradient(135deg, #d4d4d8 0%, #a1a1aa 50%, #71717a 100%)',
+                transform: 'translateZ(-1px)'
+              }} 
+            />
+            {/* Lid frame */}
+            <div 
+              className="relative rounded-t-xl sm:rounded-t-2xl"
+              style={{ 
+                background: 'linear-gradient(180deg, #e4e4e7 0%, #d4d4d8 30%, #a1a1aa 100%)',
+                padding: '4px 4px 3px 4px'
+              }}
+            >
+              {/* Camera */}
+              <div className="absolute top-[5px] left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-zinc-500/50 z-20" />
+              {/* Bezel */}
+              <div className="bg-zinc-900 rounded-t-lg sm:rounded-t-xl p-[2px]">
+                {/* Screen */}
+                <div className="relative bg-white rounded-t-md sm:rounded-t-lg overflow-hidden aspect-[16/10]">
+                  {isVideo ? (
+                    <video src={videoSrc} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+                  ) : (
+                    <img src={image} alt="" className="w-full h-full object-cover" draggable="false" />
+                  )}
+                  {/* Glare */}
+                  <div className="absolute inset-0 pointer-events-none" style={{ 
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 40%, transparent 60%, rgba(255,255,255,0.05) 100%)' 
+                  }} />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* === BASE (KEYBOARD) === */}
+          <div style={{ transform: 'translateZ(4px)', transformStyle: 'preserve-3d' }}>
+            {/* Base top */}
+            <div 
+              className="relative mx-[-2px] rounded-b-xl sm:rounded-b-2xl"
+              style={{ 
+                background: 'linear-gradient(180deg, #d4d4d8 0%, #a1a1aa 40%, #71717a 100%)',
+                padding: '2px'
+              }}
+            >
+              {/* Hinge line */}
+              <div className="h-[1px] bg-gradient-to-r from-transparent via-zinc-300 to-transparent" />
+              {/* Keyboard area — clean, no texture */}
+              <div className="h-2.5 sm:h-3.5 mx-3 sm:mx-5 mt-0.5 rounded-sm" style={{ 
+                background: 'linear-gradient(180deg, #52525b 0%, #3f3f46 100%)' 
+              }} />
+              {/* Trackpad */}
+              <div className="h-[3px] bg-zinc-400/30 rounded-full mx-auto w-8 sm:w-14 mb-1.5 sm:mb-2" />
+            </div>
+            {/* Base front edge — depth */}
+            <div className="h-[3px] mx-[-2px] rounded-b-xl sm:rounded-b-2xl" style={{ 
+              background: 'linear-gradient(180deg, #71717a 0%, #52525b 100%)' 
+            }} />
+          </div>
+        </div>
+
+        {/* Ground reflection shadow */}
+        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 w-[110%] h-6 rounded-[100%] bg-black/25 blur-lg" />
+      </div>
+    </div>
+  )
+}
+
 export default function Projects({ locale }: ProjectsProps) {
   const [activeCategory, setActiveCategory] = useState("SaaS Website")
   const sectionRef = useRef<HTMLElement>(null)
@@ -110,7 +189,7 @@ export default function Projects({ locale }: ProjectsProps) {
             transition={{ duration: 0.5 }}
             className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 w-full"
           >
-            {/* Circular Mockup — LEFT (3D MacBook) */}
+            {/* Circular Mockup — LEFT */}
             <div className="relative group shrink-0">
               {/* Rotating dashed border ring */}
               <motion.div
@@ -124,104 +203,19 @@ export default function Projects({ locale }: ProjectsProps) {
                 className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-600 to-indigo-900 blur-2xl opacity-40 pointer-events-none"
               />
 
-              {/* Circular frame — NO overflow hidden */}
+              {/* Circular frame */}
               <div className="relative h-48 w-48 sm:h-64 sm:w-64 md:h-80 md:w-80 lg:h-[450px] lg:w-[450px] rounded-full border border-white/5 shadow-2xl flex items-center justify-center overflow-visible bg-black/20 backdrop-blur-sm">
                 
                 {/* Parallax wrapper */}
                 <motion.div 
                   style={{ y: mockupY }}
-                  className="relative z-10 w-full h-full flex items-center justify-center"
+                  className="relative z-10 w-[80%] h-[80%]"
                 >
-                  {/* 3D MacBook Pro — isometric view */}
-                  <div 
-                    className="relative"
-                    style={{ 
-                      perspective: '800px',
-                      perspectiveOrigin: '50% 50%'
-                    }}
-                  >
-                    {/* MacBook container with 3D rotation */}
-                    <div 
-                      style={{ 
-                        transform: 'rotateX(20deg) rotateY(-15deg) rotateZ(2deg)',
-                        transformStyle: 'preserve-3d'
-                      }}
-                    >
-                      {/* Screen (lid) */}
-                      <div 
-                        className="relative"
-                        style={{ 
-                          transformStyle: 'preserve-3d',
-                          transform: 'translateZ(20px)'
-                        }}
-                      >
-                        {/* Lid back (aluminum) */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-zinc-200 via-zinc-300 to-zinc-400 rounded-t-xl sm:rounded-t-2xl" style={{ transform: 'translateZ(-2px)' }} />
-                        {/* Lid frame */}
-                        <div className="relative bg-gradient-to-b from-zinc-200 via-zinc-300 to-zinc-400 rounded-t-xl sm:rounded-t-2xl p-[4px] sm:p-[6px] shadow-[0_-5px_30px_rgba(0,0,0,0.2)]">
-                          {/* Camera dot */}
-                          <div className="absolute top-[6px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-zinc-500/60 z-20" />
-                          {/* Screen bezel */}
-                          <div className="relative bg-black rounded-t-lg sm:rounded-t-xl p-[2px] sm:p-[3px]">
-                            {/* Screen content */}
-                            <div className="relative bg-white rounded-t-md sm:rounded-t-lg overflow-hidden aspect-[16/10]">
-                              {activeProject.isVideo ? (
-                                <video 
-                                  src={activeProject.video} 
-                                  autoPlay 
-                                  loop 
-                                  muted 
-                                  playsInline 
-                                  className="w-full h-full object-cover"
-                                />
-                              ) : (
-                                <img 
-                                  src={activeProjectMockup} 
-                                  alt={activeProject.title} 
-                                  className="w-full h-full object-cover"
-                                  draggable="false"
-                                />
-                              )}
-                              {/* Screen glare */}
-                              <div className="absolute inset-0 bg-gradient-to-br from-white/15 via-transparent to-transparent pointer-events-none" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      {/* Base (keyboard) */}
-                      <div 
-                        className="relative"
-                        style={{ 
-                          transformStyle: 'preserve-3d',
-                          transform: 'translateZ(10px)'
-                        }}
-                      >
-                        {/* Base top surface */}
-                        <div className="bg-gradient-to-b from-zinc-300 via-zinc-400 to-zinc-500 rounded-b-xl sm:rounded-b-2xl mx-[-2px] sm:mx-[-3px] shadow-[0_15px_50px_rgba(0,0,0,0.5)]">
-                          {/* Hinge */}
-                          <div className="h-[2px] bg-gradient-to-r from-zinc-200 via-zinc-300 to-zinc-200" />
-                          {/* Keyboard area */}
-                          <div className="h-3 sm:h-4 mx-3 sm:mx-5 mt-1 bg-zinc-400/20 rounded-sm relative">
-                            {/* Key rows */}
-                            <div className="absolute inset-x-1 top-0.5 h-[1px] bg-zinc-500/20" />
-                            <div className="absolute inset-x-1 top-1.5 h-[1px] bg-zinc-500/20" />
-                            <div className="absolute inset-x-1 top-2.5 h-[1px] bg-zinc-500/20" />
-                          </div>
-                          {/* Trackpad */}
-                          <div className="h-1 sm:h-1.5 bg-zinc-300/40 rounded-full mx-auto w-10 sm:w-16 mb-2 sm:mb-3" />
-                        </div>
-                        {/* Base front edge */}
-                        <div className="h-1 bg-gradient-to-b from-zinc-500 to-zinc-600 rounded-b-xl sm:rounded-b-2xl mx-[-2px] sm:mx-[-3px]" />
-                      </div>
-                    </div>
-                    
-                    {/* Ground shadow */}
-                    <div 
-                      className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[120%] h-8 bg-black/30 rounded-[100%] blur-xl"
-                      style={{ transform: 'translateZ(-30px) rotateX(90deg)' }}
-                    />
-                  </div>
+                  <LaptopMockup 
+                    image={activeProjectMockup} 
+                    isVideo={activeProject.isVideo} 
+                    videoSrc={activeProject.video} 
+                  />
                 </motion.div>
               </div>
 
@@ -251,7 +245,6 @@ export default function Projects({ locale }: ProjectsProps) {
                 {activeProject.description}
               </p>
 
-              {/* Gallery — 3 thumbnails */}
               <div className="w-full">
                 <span className="text-[10px] md:text-xs font-medium text-zinc-500 uppercase tracking-wider font-mono">Gallery</span>
                 <div className="flex gap-3 mt-3">
