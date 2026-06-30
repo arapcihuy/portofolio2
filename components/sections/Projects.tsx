@@ -19,49 +19,98 @@ const projectGalleries: { [key: string]: string[] } = {
   "Sistem Monitoring": ["/portfolio/uiux-7.jpg", "/portfolio/flut-hand-phone.png", "/portfolio/uiux-3.jpg"],
 }
 
-/* Isometric MacBook using 2D transforms — no clipping, clean look */
+/* SVG-based isometric MacBook — clean, scalable, no CSS 3D issues */
 function IsometricLaptop({ image, isVideo, videoSrc }: { image: string; isVideo?: boolean; videoSrc?: string }) {
   return (
-    <div className="relative w-full flex items-center justify-center" style={{ transform: 'scale(0.9)' }}>
-      {/* Isometric wrapper — 2D skew for 3D illusion */}
-      <div style={{ 
-        transform: 'perspective(800px) rotateX(10deg) rotateY(-12deg)',
-        transformStyle: 'flat'
-      }}>
+    <div className="relative w-full flex items-center justify-center">
+      <svg viewBox="0 0 400 300" className="w-full h-auto drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        <defs>
+          {/* Screen content as image */}
+          <clipPath id="screenClip">
+            <rect x="52" y="28" width="240" height="150" rx="4" />
+          </clipPath>
+          <linearGradient id="lidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#e4e4e7" />
+            <stop offset="50%" stopColor="#d4d4d8" />
+            <stop offset="100%" stopColor="#a1a1aa" />
+          </linearGradient>
+          <linearGradient id="baseGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#d4d4d8" />
+            <stop offset="40%" stopColor="#a1a1aa" />
+            <stop offset="100%" stopColor="#71717a" />
+          </linearGradient>
+          <linearGradient id="screenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#ffffff" />
+            <stop offset="100%" stopColor="#f4f4f5" />
+          </linearGradient>
+          <filter id="glare">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="0.5" />
+          </filter>
+        </defs>
+
+        {/* === SCREEN (LID) === */}
+        {/* Lid back */}
+        <rect x="50" y="25" width="244" height="156" rx="8" fill="url(#lidGrad)" />
+        
+        {/* Lid frame (outer) */}
+        <rect x="50" y="25" width="244" height="156" rx="8" fill="url(#lidGrad)" stroke="#a1a1aa" strokeWidth="0.5" />
+        
+        {/* Camera dot */}
+        <circle cx="172" cy="32" r="2" fill="#71717a" opacity="0.6" />
+        
+        {/* Screen bezel */}
+        <rect x="52" y="28" width="240" height="150" rx="4" fill="#18181b" />
+        
+        {/* Screen content area */}
+        <rect x="54" y="30" width="236" height="146" rx="3" fill="url(#screenGrad)" />
+        
+        {/* Screen content (will be replaced by img) */}
+        <g clipPath="url(#screenClip)">
+          <foreignObject x="54" y="30" width="236" height="146">
+            {isVideo ? (
+              <video src={videoSrc} autoPlay loop muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            ) : (
+              <img src={image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} draggable="false" />
+            )}
+          </foreignObject>
+        </g>
+        
+        {/* Screen glare overlay */}
+        <rect x="54" y="30" width="236" height="146" rx="3" fill="url(#glareGrad)" opacity="0.15" />
+        <defs>
+          <linearGradient id="glareGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="white" />
+            <stop offset="40%" stopColor="white" stopOpacity="0" />
+            <stop offset="100%" stopColor="white" stopOpacity="0" />
+          </linearGradient>
+        </defs>
+
+        {/* === BASE (KEYBOARD) === */}
+        {/* Base top surface */}
+        <rect x="48" y="182" width="248" height="45" rx="4" fill="url(#baseGrad)" />
+        
+        {/* Hinge line */}
+        <rect x="60" y="182" width="224" height="1" fill="#d4d4d8" opacity="0.6" />
+        
+        {/* Keyboard area */}
+        <rect x="70" y="188" width="204" height="18" rx="2" fill="#52525b" opacity="0.3" />
+        
+        {/* Key rows (subtle) */}
+        <line x1="75" y1="192" x2="269" y2="192" stroke="#71717a" strokeWidth="0.5" opacity="0.2" />
+        <line x1="75" y1="196" x2="269" y2="196" stroke="#71717a" strokeWidth="0.5" opacity="0.2" />
+        <line x1="75" y1="200" x2="269" y2="200" stroke="#71717a" strokeWidth="0.5" opacity="0.2" />
+        
+        {/* Trackpad */}
+        <rect x="155" y="210" width="80" height="8" rx="4" fill="#a1a1aa" opacity="0.3" />
+        
+        {/* Base front edge (depth) */}
+        <rect x="48" y="227" width="248" height="4" rx="2" fill="#71717a" />
+
         {/* Ground shadow */}
-        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[100%] h-8 bg-black/20 rounded-[100%] blur-xl" />
-        
-        {/* Screen (lid) */}
-        <div className="relative bg-gradient-to-b from-zinc-200 via-zinc-300 to-zinc-400 rounded-t-xl lg:rounded-t-2xl p-[3px] lg:p-[5px] shadow-[0_-2px_20px_rgba(0,0,0,0.15)]">
-          {/* Camera */}
-          <div className="absolute top-[5px] left-1/2 -translate-x-1/2 w-1 h-1 lg:w-1.5 lg:h-1.5 rounded-full bg-zinc-500/50 z-20" />
-          {/* Bezel */}
-          <div className="bg-zinc-900 rounded-t-lg lg:rounded-t-xl p-[2px] lg:p-[3px]">
-            {/* Screen content */}
-            <div className="relative bg-white rounded-t-md lg:rounded-t-lg overflow-hidden aspect-[16/10]">
-              {isVideo ? (
-                <video src={videoSrc} autoPlay loop muted playsInline className="w-full h-full object-cover" />
-              ) : (
-                <img src={image} alt="" className="w-full h-full object-cover" draggable="false" />
-              )}
-              {/* Glare */}
-              <div className="absolute inset-0 pointer-events-none" style={{ 
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%)' 
-              }} />
-            </div>
-          </div>
-        </div>
-        
-        {/* Base (keyboard) */}
-        <div className="bg-gradient-to-b from-zinc-300 via-zinc-400 to-zinc-500 rounded-b-xl lg:rounded-b-2xl mx-[-1px] shadow-[0_8px_30px_rgba(0,0,0,0.35)]">
-          {/* Hinge */}
-          <div className="h-[1px] bg-zinc-200/60" />
-          {/* Keyboard area */}
-          <div className="h-2.5 lg:h-3.5 mx-3 lg:mx-5 mt-0.5 bg-zinc-500/20 rounded-sm" />
-          {/* Trackpad */}
-          <div className="h-[3px] bg-zinc-300/30 rounded-full mx-auto w-8 lg:w-14 mb-1.5 lg:mb-2" />
-        </div>
-      </div>
+        <ellipse cx="172" cy="245" rx="140" ry="12" fill="black" opacity="0.2">
+          <animate attributeName="opacity" values="0.2;0.15;0.2" dur="3s" repeatCount="indefinite" />
+        </ellipse>
+      </svg>
     </div>
   )
 }
