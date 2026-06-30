@@ -9,14 +9,14 @@ interface ProjectsProps {
   locale: "EN" | "ID"
 }
 
-const projectGalleries: { [key: string]: { img1: string; img2: string } } = {
-  "Security": { img1: "/portfolio/flut-iphone.png", img2: "/portfolio/flut-chess.png" },
-  "SaaS Website": { img1: "/portfolio/cimeds-screenshot.jpg", img2: "/portfolio/flut-hero.png" },
-  "e-Commerce": { img1: "/portfolio/uiux-1.jpg", img2: "/portfolio/uiux-4.jpg" },
-  "CMS Website": { img1: "/portfolio/cbs-portal.jpg", img2: "/portfolio/rumbel-website.jpg" },
-  "Monitoring System": { img1: "/portfolio/uiux-7.jpg", img2: "/portfolio/flut-hand-phone.png" },
-  "Keamanan": { img1: "/portfolio/flut-iphone.png", img2: "/portfolio/flut-chess.png" },
-  "Sistem Monitoring": { img1: "/portfolio/uiux-7.jpg", img2: "/portfolio/flut-hand-phone.png" },
+const projectGalleries: { [key: string]: string[] } = {
+  "Security": ["/portfolio/flut-iphone.png", "/portfolio/flut-chess.png", "/portfolio/flut-heads.png"],
+  "SaaS Website": ["/portfolio/cimeds-screenshot.jpg", "/portfolio/flut-hero.png", "/portfolio/flut-iphone.png"],
+  "e-Commerce": ["/portfolio/uiux-1.jpg", "/portfolio/uiux-4.jpg", "/portfolio/uiux-7.jpg"],
+  "CMS Website": ["/portfolio/cbs-portal.jpg", "/portfolio/rumbel-website.jpg", "/portfolio/uiux-8.jpg"],
+  "Monitoring System": ["/portfolio/uiux-7.jpg", "/portfolio/flut-hand-phone.png", "/portfolio/uiux-3.jpg"],
+  "Keamanan": ["/portfolio/flut-iphone.png", "/portfolio/flut-chess.png", "/portfolio/flut-heads.png"],
+  "Sistem Monitoring": ["/portfolio/uiux-7.jpg", "/portfolio/flut-hand-phone.png", "/portfolio/uiux-3.jpg"],
 }
 
 export default function Projects({ locale }: ProjectsProps) {
@@ -50,7 +50,7 @@ export default function Projects({ locale }: ProjectsProps) {
   const activeProjectName = categoryMap[activeCategory] || "CIMEDs / PT Ontiyus Karya Mulia"
   const activeProject = projects.find(p => p.title === activeProjectName) || projects[0]
   const activeProjectMockup = activeProject.image || "/portfolio/cimeds-screenshot.jpg"
-  const gallery = projectGalleries[activeCategory] || { img1: activeProjectMockup, img2: "/portfolio/flut-logo.png" }
+  const gallery = projectGalleries[activeCategory] || [activeProjectMockup, "/portfolio/flut-logo.png", "/portfolio/uiux-1.jpg"]
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -110,7 +110,7 @@ export default function Projects({ locale }: ProjectsProps) {
             transition={{ duration: 0.5 }}
             className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 w-full"
           >
-            {/* Circular Mockup — LEFT (exactly like hayhasan) */}
+            {/* Circular Mockup — LEFT (clean, no CSS 3D) */}
             <div className="relative group shrink-0">
               {/* Rotating dashed border ring */}
               <motion.div
@@ -124,7 +124,7 @@ export default function Projects({ locale }: ProjectsProps) {
                 className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-600 to-indigo-900 blur-2xl opacity-40 pointer-events-none"
               />
 
-              {/* Circular frame — overflow visible */}
+              {/* Circular frame */}
               <div className="relative h-48 w-48 sm:h-64 sm:w-64 md:h-80 md:w-80 lg:h-[450px] lg:w-[450px] rounded-full border border-white/5 shadow-2xl flex items-center justify-center overflow-visible bg-black/20 backdrop-blur-sm">
                 
                 {/* Parallax wrapper */}
@@ -132,35 +132,27 @@ export default function Projects({ locale }: ProjectsProps) {
                   style={{ y: mockupY }}
                   className="relative z-10 w-full h-full flex items-center justify-center"
                 >
-                  {/* MacBook-style laptop — clean flat render */}
-                  <div className="relative w-[75%] md:w-[80%]" style={{ filter: 'drop-shadow(0 20px 50px rgba(0,0,0,0.5))' }}>
-                    {/* Screen (lid) */}
-                    <div className="relative bg-gradient-to-b from-zinc-200 via-zinc-300 to-zinc-400 rounded-t-xl sm:rounded-t-2xl p-[3px] sm:p-[5px]">
-                      {/* Camera dot */}
-                      <div className="absolute top-[5px] left-1/2 -translate-x-1/2 w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-zinc-500/60 z-20" />
-                      {/* Screen bezel */}
-                      <div className="relative bg-black rounded-t-lg sm:rounded-t-xl p-[2px] sm:p-[3px]">
-                        {/* Screen content */}
-                        <div className="relative bg-white rounded-t-md sm:rounded-t-lg overflow-hidden aspect-[16/10]">
-                          {activeProject.isVideo ? (
-                            <video src={activeProject.video} autoPlay loop muted playsInline className="w-full h-full object-cover" />
-                          ) : (
-                            <img src={activeProjectMockup} alt={activeProject.title} className="w-full h-full object-cover" draggable="false" />
-                          )}
-                          {/* Screen glare */}
-                          <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none" />
-                        </div>
-                      </div>
-                    </div>
-                    {/* Base (keyboard) */}
-                    <div className="bg-gradient-to-b from-zinc-300 via-zinc-400 to-zinc-500 rounded-b-xl sm:rounded-b-2xl mx-[-1px] sm:mx-[-2px] shadow-[0_8px_30px_rgba(0,0,0,0.4)]">
-                      {/* Hinge */}
-                      <div className="h-[1px] bg-zinc-200/60" />
-                      {/* Keyboard */}
-                      <div className="h-2 sm:h-3 mx-2 sm:mx-4 mt-0.5 bg-zinc-400/20 rounded-sm" />
-                      {/* Trackpad */}
-                      <div className="h-0.5 sm:h-1 bg-zinc-300/30 rounded-full mx-auto w-8 sm:w-12 mb-1.5 sm:mb-2" />
-                    </div>
+                  {/* Project image — clean, no laptop frame */}
+                  <div className="relative w-[85%] h-[85%] rounded-2xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] border border-white/10">
+                    {activeProject.isVideo ? (
+                      <video 
+                        src={activeProject.video} 
+                        autoPlay 
+                        loop 
+                        muted 
+                        playsInline 
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <img 
+                        src={activeProjectMockup} 
+                        alt={activeProject.title} 
+                        className="w-full h-full object-cover"
+                        draggable="false"
+                      />
+                    )}
+                    {/* Subtle overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
                   </div>
                 </motion.div>
               </div>
@@ -191,21 +183,18 @@ export default function Projects({ locale }: ProjectsProps) {
                 {activeProject.description}
               </p>
 
+              {/* Gallery — 3 thumbnails like hayhasan */}
               <div className="w-full">
                 <span className="text-[10px] md:text-xs font-medium text-zinc-500 uppercase tracking-wider font-mono">Gallery</span>
                 <div className="flex gap-3 mt-3">
-                  <div className="group relative w-28 h-28 lg:w-32 lg:h-32 rounded-xl overflow-hidden bg-zinc-900/60 border border-white/5 hover:border-white/20 transition-all duration-300 cursor-pointer">
-                    <Image src={gallery.img1} alt="Gallery 1" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
-                      <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View</span>
+                  {gallery.map((img, idx) => (
+                    <div key={idx} className="group relative w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 rounded-xl overflow-hidden bg-zinc-900/60 border border-white/5 hover:border-white/20 transition-all duration-300 cursor-pointer">
+                      <Image src={img} alt={`Gallery ${idx + 1}`} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
+                        <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="group relative w-28 h-28 lg:w-32 lg:h-32 rounded-xl overflow-hidden bg-zinc-900/60 border border-white/5 hover:border-white/20 transition-all duration-300 cursor-pointer">
-                    <Image src={gallery.img2} alt="Gallery 2" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
-                      <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View</span>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -240,7 +229,8 @@ export default function Projects({ locale }: ProjectsProps) {
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
                 className="min-w-[260px] md:min-w-[340px] group cursor-pointer transition-all duration-300 hover:-translate-y-2"
               >
