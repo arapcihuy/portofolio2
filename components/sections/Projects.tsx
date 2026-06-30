@@ -9,49 +9,6 @@ interface ProjectsProps {
   locale: "EN" | "ID"
 }
 
-// Simple Laptop Mockup
-function LaptopMockup({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="relative">
-      <div className="absolute -inset-8 bg-blue-500/8 blur-[40px] rounded-full" />
-      <div className="relative bg-gradient-to-b from-[#c0c0c0] via-[#a8a8a8] to-[#909090] rounded-t-[14px] p-[6px] pb-0 shadow-[0_-2px_20px_rgba(0,0,0,0.3)]">
-        <div className="absolute top-[3px] left-1/2 -translate-x-1/2 flex items-center gap-1.5">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#2a2a2a] shadow-inner" />
-          <div className="w-1 h-1 rounded-full bg-[#1a1a1a]" />
-        </div>
-        <div className="relative bg-[#111] rounded-t-[8px] overflow-hidden aspect-[16/10] shadow-[inset_0_0_30px_rgba(0,0,0,0.8)]">
-          <div className="relative w-full h-full">{children}</div>
-          <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none" />
-        </div>
-        <div className="h-4 bg-gradient-to-b from-[#a0a0a0] to-[#888] flex items-center justify-center">
-          <div className="w-2 h-2 rounded-full bg-[#666] shadow-inner" />
-        </div>
-      </div>
-      <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-[80%] h-6 bg-black/30 blur-xl rounded-full" />
-    </div>
-  )
-}
-
-// Simple Phone Mockup
-function PhoneMockup({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="relative">
-      <div className="absolute -inset-10 bg-purple-500/8 blur-[40px] rounded-full" />
-      <div className="relative bg-gradient-to-b from-[#8a8a8e] via-[#6e6e72] to-[#5a5a5e] rounded-[3rem] p-[3px] shadow-[0_0_40px_rgba(0,0,0,0.5),0_20px_60px_rgba(0,0,0,0.4)]">
-        <div className="absolute right-[-1.5px] top-28 w-[2px] h-10 bg-[#777] rounded-r-sm" />
-        <div className="absolute left-[-1.5px] top-24 w-[2px] h-5 bg-[#777] rounded-l-sm" />
-        <div className="absolute left-[-1.5px] top-32 w-[2px] h-8 bg-[#777] rounded-l-sm" />
-        <div className="relative bg-[#000] rounded-[2.8rem] overflow-hidden aspect-[9/19.5]">
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 w-[72px] h-[22px] bg-black rounded-full z-20 shadow-[0_0_10px_rgba(0,0,0,0.5)]" />
-          <div className="relative w-full h-full">{children}</div>
-          <div className="absolute inset-0 bg-gradient-to-br from-white/[0.08] via-transparent to-transparent pointer-events-none z-10" />
-        </div>
-      </div>
-      <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-[60%] h-8 bg-black/30 blur-xl rounded-full" />
-    </div>
-  )
-}
-
 export default function Projects({ locale }: ProjectsProps) {
   const [activeCategory, setActiveCategory] = useState("SaaS Website")
 
@@ -85,11 +42,13 @@ export default function Projects({ locale }: ProjectsProps) {
 
   return (
     <section id="projects" className="w-full bg-black text-zinc-100 overflow-hidden py-12 md:py-20">
-      <div className="fixed inset-0 pointer-events-none">
+      {/* Background glow */}
+      <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0" style={{ background: "radial-gradient(circle at 0% 50%, rgba(59, 130, 246, 0.12), transparent 50%)" }}></div>
       </div>
 
       <main className="relative z-10 w-full px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 flex flex-col justify-center max-w-7xl mx-auto">
+        {/* Section heading */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -105,29 +64,26 @@ export default function Projects({ locale }: ProjectsProps) {
           </p>
         </motion.div>
 
-        {/* Filters — BIG clickable */}
+        {/* Filters — pill buttons exactly like hayhasan */}
         <div className="flex justify-center w-full mb-10 md:mb-14 px-2">
-          <div className="flex items-center gap-2 p-2 rounded-2xl liquid-glass">
+          <div className="flex items-center gap-1 p-1 rounded-full bg-zinc-900/60 border border-white/5">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`relative px-6 md:px-8 py-4 md:py-5 rounded-xl text-xs md:text-sm font-semibold cursor-pointer transition-all duration-200 active:scale-95 z-10 ${activeCategory === cat ? 'text-white' : 'text-zinc-500 hover:text-zinc-300'}`}
+                className={`relative px-4 md:px-6 py-2.5 md:py-3 rounded-full text-xs md:text-sm font-medium cursor-pointer transition-all duration-300 ${
+                  activeCategory === cat 
+                    ? 'bg-zinc-800 text-white border border-white/10' 
+                    : 'text-zinc-500 hover:text-zinc-300 border border-transparent'
+                }`}
               >
-                {activeCategory === cat && (
-                  <motion.div
-                    layoutId="activeFilter"
-                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                    className="absolute inset-0 rounded-xl bg-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
-                  />
-                )}
-                <span className="relative z-20">{cat}</span>
+                {cat}
               </button>
             ))}
           </div>
         </div>
 
-        {/* Active Project Showcase */}
+        {/* Active Project Showcase — exactly like hayhasan */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
@@ -135,51 +91,57 @@ export default function Projects({ locale }: ProjectsProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12 w-full"
+            className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 w-full"
           >
-            {/* Device Mockups */}
-            <div className="relative flex items-end justify-center gap-6 lg:gap-10 py-8">
+            {/* Circular Mockup with Laptop — LEFT side */}
+            <div className="relative flex-shrink-0 w-[320px] h-[320px] md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px]">
+              {/* Circular container */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-600/20 via-blue-900/30 to-indigo-900/20 border border-blue-500/20 shadow-[0_0_60px_rgba(59,130,246,0.15)]" />
+              
+              {/* Rotating border */}
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-[-40%] rounded-full border border-dashed border-white/[0.03]"
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                className="absolute inset-[-5%] rounded-full border border-dashed border-blue-500/10"
               />
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-600/10 via-purple-600/5 to-blue-600/10 blur-[60px]" />
 
-              {/* Phone */}
-              <motion.div
-                initial={{ opacity: 0, x: -40 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                className="relative z-0 hidden md:block"
-              >
-                <div className="w-36 lg:w-44">
-                  <PhoneMockup>
-                    <Image src={activeProjectMockup} alt={`${activeProject.title} mobile`} fill className="object-cover" />
-                  </PhoneMockup>
-                </div>
-              </motion.div>
+              {/* Inner glow */}
+              <div className="absolute inset-8 rounded-full bg-gradient-to-br from-blue-500/5 to-transparent" />
 
-              {/* Laptop */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.1, duration: 0.6 }}
-                className="relative z-10"
-              >
-                <div className="w-72 sm:w-80 lg:w-[420px]">
-                  <LaptopMockup>
-                    {activeProject.isVideo ? (
-                      <video src={activeProject.video} autoPlay loop muted playsInline className="w-full h-full object-cover" />
-                    ) : (
-                      <Image src={activeProjectMockup} alt={activeProject.title} fill className="object-cover" />
-                    )}
-                  </LaptopMockup>
-                </div>
-              </motion.div>
+              {/* Laptop inside circle */}
+              <div className="absolute inset-0 flex items-center justify-center p-8 md:p-12">
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2, duration: 0.6 }}
+                  className="w-full"
+                >
+                  {/* MacBook */}
+                  <div className="relative">
+                    {/* Screen */}
+                    <div className="bg-gradient-to-b from-zinc-600 to-zinc-800 rounded-t-xl p-[6px] pb-0 shadow-lg">
+                      <div className="absolute top-[6px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-zinc-500" />
+                      <div className="relative bg-white rounded-t-lg overflow-hidden aspect-[16/10]">
+                        {activeProject.isVideo ? (
+                          <video src={activeProject.video} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+                        ) : (
+                          <Image src={activeProjectMockup} alt={activeProject.title} fill className="object-cover" />
+                        )}
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
+                      </div>
+                    </div>
+                    {/* Base */}
+                    <div className="h-2.5 bg-gradient-to-b from-zinc-500 to-zinc-700 rounded-b-lg mx-[-6px]">
+                      <div className="mx-auto w-12 h-1 bg-zinc-400/50 rounded-b-md" />
+                    </div>
+                    <div className="h-1 bg-zinc-800 rounded-b-lg mx-[-10px]" />
+                  </div>
+                </motion.div>
+              </div>
 
+              {/* Project link badge below circle */}
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
                 className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20"
@@ -191,28 +153,33 @@ export default function Projects({ locale }: ProjectsProps) {
               </motion.div>
             </div>
 
-            {/* Description */}
-            <div className="w-full max-w-md text-left lg:pl-4">
+            {/* Description — RIGHT side */}
+            <div className="w-full max-w-md text-left">
               <h2 className="text-xs md:text-sm font-bold uppercase tracking-[0.2em] text-zinc-500 mb-2">
                 {activeCategory}
               </h2>
-              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-3 text-transparent bg-clip-text bg-gradient-to-b from-white to-zinc-500">
+              <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold tracking-tight mb-3 text-white">
                 {activeProject.title}
               </h1>
-              <p className="text-sm md:text-base text-zinc-400 mb-6 max-w-sm leading-relaxed">
+              <p className="text-sm md:text-base text-zinc-400 mb-8 max-w-sm leading-relaxed">
                 {activeProject.description}
               </p>
 
+              {/* Gallery thumbnails — like hayhasan */}
               <div className="w-full">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-[10px] md:text-xs font-medium text-zinc-500 uppercase tracking-wider">Gallery</span>
-                </div>
-                <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-2 cursor-grab">
-                  <div className="group relative flex-shrink-0 w-24 h-24 lg:w-28 lg:h-28 rounded-xl overflow-hidden bg-zinc-900/60 border border-white/5 hover:border-white/20 transition-all duration-300">
+                <span className="text-[10px] md:text-xs font-medium text-zinc-500 uppercase tracking-wider">Gallery</span>
+                <div className="flex gap-3 mt-3">
+                  <div className="group relative w-28 h-28 lg:w-32 lg:h-32 rounded-xl overflow-hidden bg-zinc-900/60 border border-white/5 hover:border-white/20 transition-all duration-300 cursor-pointer">
                     <Image src={activeProjectMockup} alt="Gallery 1" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View</span>
+                    </div>
                   </div>
-                  <div className="group relative flex-shrink-0 w-24 h-24 lg:w-28 lg:h-28 rounded-xl overflow-hidden bg-zinc-900/60 border border-white/5 hover:border-white/20 transition-all duration-300">
-                    <Image src="/portfolio/flut-logo.png" alt="Gallery 2" fill className="object-contain transition-transform duration-500 group-hover:scale-110 p-2" />
+                  <div className="group relative w-28 h-28 lg:w-32 lg:h-32 rounded-xl overflow-hidden bg-zinc-900/60 border border-white/5 hover:border-white/20 transition-all duration-300 cursor-pointer">
+                    <Image src="/portfolio/flut-logo.png" alt="Gallery 2" fill className="object-contain p-3 transition-transform duration-500 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity text-white text-xs bg-black/50 px-3 py-1.5 rounded-full backdrop-blur-sm">View</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -220,7 +187,7 @@ export default function Projects({ locale }: ProjectsProps) {
           </motion.div>
         </AnimatePresence>
 
-        {/* All Projects */}
+        {/* All Projects Section */}
         <div className="mt-20 md:mt-32 border-t border-white/10 pt-12 md:pt-16">
           <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between">
             <div>
@@ -250,7 +217,7 @@ export default function Projects({ locale }: ProjectsProps) {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className="min-w-[260px] md:min-w-[340px] group cursor-pointer transition-all duration-300 hover:-translate-y-2 liquid-glass-card rounded-2xl overflow-hidden"
+                className="min-w-[260px] md:min-w-[340px] group cursor-pointer transition-all duration-300 hover:-translate-y-2"
               >
                 <div className="aspect-[3/2] overflow-hidden rounded-xl bg-white/5 mb-3 relative">
                   {item.isVideo ? (
