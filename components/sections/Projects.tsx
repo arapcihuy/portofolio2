@@ -58,13 +58,8 @@ export default function Projects({ locale }: ProjectsProps) {
     offset: ["start end", "end start"]
   })
 
-  // Glow scale: 0.95 → 1.05 → 0.95 (subtle breathing)
   const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1.05, 0.95])
-  
-  // Image translateY: subtle float effect
   const mockupY = useTransform(scrollYProgress, [0, 1], [30, -30])
-
-  // Border ring rotation
   const borderRotate = useTransform(scrollYProgress, [0, 1], [0, 360])
 
   return (
@@ -89,7 +84,6 @@ export default function Projects({ locale }: ProjectsProps) {
           </p>
         </motion.div>
 
-        {/* Filters */}
         <div className="flex justify-center w-full mb-10 md:mb-14 px-2">
           <div className="flex items-center gap-1 p-1 rounded-full bg-zinc-900/60 border border-white/5">
             {categories.map((cat) => (
@@ -108,7 +102,6 @@ export default function Projects({ locale }: ProjectsProps) {
           </div>
         </div>
 
-        {/* Active Project Showcase */}
         <AnimatePresence mode="wait">
           <motion.div
             key={activeCategory}
@@ -118,47 +111,60 @@ export default function Projects({ locale }: ProjectsProps) {
             transition={{ duration: 0.5 }}
             className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 w-full"
           >
-            {/* Circular Mockup — LEFT (exactly like hayhasan) */}
+            {/* Circular Mockup — LEFT (isometric MacBook style) */}
             <div className="relative shrink-0">
-              {/* Rotating dashed border ring — inset-[-20%] like hayhasan */}
+              {/* Rotating dashed border ring */}
               <motion.div
                 style={{ rotate: borderRotate }}
                 className="absolute inset-[-20%] rounded-full border border-dashed border-white/10 border-l-blue-500/50 pointer-events-none"
               />
 
-              {/* Background glow circle — scale with scroll */}
+              {/* Background glow */}
               <motion.div 
                 style={{ scale: glowScale }}
                 className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-600 to-indigo-900 blur-2xl opacity-40 pointer-events-none"
               />
 
-              {/* Circular frame container */}
+              {/* Circular frame */}
               <div className="relative h-48 w-48 sm:h-64 sm:w-64 md:h-80 md:w-80 lg:h-[450px] lg:w-[450px] rounded-full border border-white/5 shadow-2xl flex items-center justify-center overflow-hidden bg-black/20 backdrop-blur-sm">
                 
-                {/* Parallax moving image wrapper — translateY on scroll */}
+                {/* Parallax moving wrapper */}
                 <motion.div 
                   style={{ y: mockupY }}
                   className="relative z-10 w-full h-full flex items-center justify-center"
                 >
-                  {activeProject.isVideo ? (
-                    <video 
-                      src={activeProject.video} 
-                      autoPlay 
-                      loop 
-                      muted 
-                      playsInline 
-                      className="w-full h-full object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-4"
-                      style={{ transform: 'scale(1.3)' }}
-                    />
-                  ) : (
-                    <img 
-                      src={activeProjectMockup} 
-                      alt={activeProject.title} 
-                      className="w-full h-full object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-4"
-                      style={{ transform: 'scale(1.3)' }}
-                      draggable="false"
-                    />
-                  )}
+                  {/* Isometric MacBook — CSS 3D transform */}
+                  <div className="relative" style={{ perspective: '1000px' }}>
+                    {/* MacBook lid (screen) */}
+                    <div 
+                      className="relative bg-gradient-to-b from-zinc-300 to-zinc-400 rounded-t-lg sm:rounded-t-xl p-[3px] sm:p-[5px] shadow-2xl"
+                      style={{ transform: 'rotateX(12deg) rotateY(-8deg)' }}
+                    >
+                      {/* Camera dot */}
+                      <div className="absolute top-[4px] left-1/2 -translate-x-1/2 w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-zinc-500 z-20" />
+                      {/* Screen */}
+                      <div className="relative bg-white rounded-t-md sm:rounded-t-lg overflow-hidden aspect-[16/10]">
+                        {activeProject.isVideo ? (
+                          <video src={activeProject.video} autoPlay loop muted playsInline className="w-full h-full object-cover" />
+                        ) : (
+                          <img src={activeProjectMockup} alt={activeProject.title} className="w-full h-full object-cover" draggable="false" />
+                        )}
+                        {/* Screen glare */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none" />
+                      </div>
+                    </div>
+                    {/* MacBook base (keyboard) */}
+                    <div 
+                      className="bg-gradient-to-b from-zinc-400 to-zinc-500 rounded-b-lg sm:rounded-b-xl mx-[-2px] sm:mx-[-4px] shadow-lg"
+                      style={{ transform: 'rotateX(12deg) rotateY(-8deg)', transformOrigin: 'top center' }}
+                    >
+                      <div className="h-1.5 sm:h-2 bg-zinc-300/50 rounded-b-md mx-2 sm:mx-4 mt-0.5" />
+                      {/* Keyboard texture */}
+                      <div className="h-0.5 sm:h-1 bg-zinc-500/30 rounded-full mx-3 sm:mx-6 mb-0.5" />
+                      {/* Trackpad */}
+                      <div className="h-0.5 sm:h-0.5 bg-zinc-300/30 rounded-full mx-auto w-8 sm:w-12 mb-1 sm:mb-2" />
+                    </div>
+                  </div>
                 </motion.div>
               </div>
 
