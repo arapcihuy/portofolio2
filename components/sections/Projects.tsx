@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { useState, useRef } from "react"
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion"
 import Image from "next/image"
 import { translations, translatedProjects } from "@/lib/translations"
 
@@ -22,6 +22,7 @@ const projectGalleries: { [key: string]: { img1: string; img2: string } } = {
 
 export default function Projects({ locale }: ProjectsProps) {
   const [activeCategory, setActiveCategory] = useState("SaaS Website")
+  const sectionRef = useRef<HTMLElement>(null)
 
   const t = (key: string) => {
     return translations[key]?.[locale] || key
@@ -52,8 +53,23 @@ export default function Projects({ locale }: ProjectsProps) {
   const activeProjectMockup = activeProject.image || "/portfolio/cimeds-screenshot.jpg"
   const gallery = projectGalleries[activeCategory] || { img1: activeProjectMockup, img2: "/portfolio/flut-logo.png" }
 
+  // Scroll animations exactly like hayhasan
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  })
+
+  // Background glow scale: scale(1) to scale(1.08)
+  const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.95, 1.05, 0.95])
+  
+  // Mockup translateY: translateY(15px) to translateY(-15px)
+  const mockupY = useTransform(scrollYProgress, [0, 1], [25, -25])
+
+  // Dashed border rotation
+  const borderRotate = useTransform(scrollYProgress, [0, 1], [0, 360])
+
   return (
-    <section id="projects" className="w-full bg-black text-zinc-100 overflow-hidden py-12 md:py-20">
+    <section ref={sectionRef} id="projects" className="w-full bg-black text-zinc-100 overflow-hidden py-12 md:py-20">
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute inset-0" style={{ background: "radial-gradient(circle at 0% 50%, rgba(59, 130, 246, 0.12), transparent 50%)" }}></div>
       </div>
@@ -105,50 +121,55 @@ export default function Projects({ locale }: ProjectsProps) {
             className="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 w-full"
           >
             {/* Circular Mockup with Laptop — LEFT */}
-            <div className="relative flex-shrink-0 w-[320px] h-[320px] md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px]">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-600/20 via-blue-900/30 to-indigo-900/20 border border-blue-500/20 shadow-[0_0_60px_rgba(59,130,246,0.15)]" />
+            <div className="relative flex-shrink-0 w-[320px] h-[320px] md:w-[400px] md:h-[400px] lg:w-[480px] lg:h-[480px] flex items-center justify-center">
+              {/* Rotating border */}
               <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-[-5%] rounded-full border border-dashed border-blue-500/10"
+                style={{ rotate: borderRotate }}
+                className="absolute inset-[-5%] rounded-full border border-dashed border-white/10 border-l-blue-500/50 pointer-events-none"
               />
-              <div className="absolute inset-8 rounded-full bg-gradient-to-br from-blue-500/5 to-transparent" />
 
-              {/* Laptop inside circle */}
-              <div className="absolute inset-0 flex items-center justify-center p-8 md:p-12">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.2, duration: 0.6 }}
-                  className="w-full"
+              {/* Background gradient scale */}
+              <motion.div 
+                style={{ scale: glowScale }}
+                className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-600 to-indigo-900 blur-2xl opacity-40 pointer-events-none"
+              />
+
+              {/* Central rounded frame container */}
+              <div className="relative h-48 w-48 sm:h-64 sm:w-64 md:h-80 md:w-80 lg:h-[450px] lg:w-[450px] rounded-full border border-white/5 shadow-2xl flex items-center justify-center overflow-hidden bg-black/20 backdrop-blur-sm">
+                
+                {/* Parallax moving image wrapper */}
+                <motion.div 
+                  style={{ y: mockupY }}
+                  className="relative z-10 w-full h-full flex items-center justify-center"
                 >
-                  <div className="relative">
-                    <div className="bg-gradient-to-b from-zinc-600 to-zinc-800 rounded-t-xl p-[6px] pb-0 shadow-lg">
-                      <div className="absolute top-[6px] left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-zinc-500" />
-                      <div className="relative bg-white rounded-t-lg overflow-hidden aspect-[16/10]">
-                        {activeProject.isVideo ? (
-                          <video src={activeProject.video} autoPlay loop muted playsInline className="w-full h-full object-cover" />
-                        ) : (
-                          <Image src={activeProjectMockup} alt={activeProject.title} fill className="object-cover" />
-                        )}
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent pointer-events-none" />
-                      </div>
-                    </div>
-                    <div className="h-2.5 bg-gradient-to-b from-zinc-500 to-zinc-700 rounded-b-lg mx-[-6px]">
-                      <div className="mx-auto w-12 h-1 bg-zinc-400/50 rounded-b-md" />
-                    </div>
-                    <div className="h-1 bg-zinc-800 rounded-b-lg mx-[-10px]" />
-                  </div>
+                  {activeProject.isVideo ? (
+                    <video 
+                      src={activeProject.video} 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline 
+                      className="w-[90%] h-[90%] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-4 scale-125" 
+                    />
+                  ) : (
+                    <img 
+                      src={activeProjectMockup} 
+                      alt={activeProject.title} 
+                      className="w-[90%] h-[90%] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] p-4 scale-125"
+                      draggable="false"
+                    />
+                  )}
                 </motion.div>
               </div>
 
+              {/* Project link badge below circle */}
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.5 }}
-                className="absolute -bottom-2 left-1/2 -translate-x-1/2 z-20"
+                className="absolute -bottom-6 sm:bottom-[-2rem] left-1/2 -translate-x-1/2 z-20 whitespace-nowrap"
               >
-                <a href={activeProject.link} target="_blank" rel="noreferrer" className="flex items-center gap-2 text-[10px] md:text-xs uppercase tracking-widest text-zinc-400 bg-zinc-950/80 px-4 py-2 rounded-full border border-white/5 backdrop-blur hover:text-white hover:border-white/20 transition-all whitespace-nowrap">
+                <a href={activeProject.link} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs uppercase tracking-widest text-zinc-500 bg-zinc-950/80 px-2 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/5 backdrop-blur hover:text-zinc-300 hover:border-white/20 transition-all cursor-pointer">
                   <span className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse" />
                   {activeProject.title}
                 </a>
@@ -169,7 +190,7 @@ export default function Projects({ locale }: ProjectsProps) {
 
               {/* Gallery — 2 DIFFERENT thumbnails */}
               <div className="w-full">
-                <span className="text-[10px] md:text-xs font-medium text-zinc-500 uppercase tracking-wider">Gallery</span>
+                <span className="text-[10px] md:text-xs font-medium text-zinc-500 uppercase tracking-wider font-mono text-zinc-500">Gallery</span>
                 <div className="flex gap-3 mt-3">
                   <div className="group relative w-28 h-28 lg:w-32 lg:h-32 rounded-xl overflow-hidden bg-zinc-900/60 border border-white/5 hover:border-white/20 transition-all duration-300 cursor-pointer">
                     <Image src={gallery.img1} alt="Gallery 1" fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
