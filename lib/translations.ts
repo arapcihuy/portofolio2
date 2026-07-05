@@ -191,7 +191,7 @@ export const translatedProjects = (locale: "EN" | "ID") => [
   {
     title: "Sistem Billiard",
     description: locale === "EN" ? "Multi-tenant billiard hall management system with real-time tracking, table reservations, and payment integration." : "Sistem manajemen hall biliar multi-tenant dengan pelacakan real-time, reservasi meja, dan integrasi pembayaran.",
-    image: "/portfolio/cimeds-screenshot.jpg",
+    image: "/portfolio/sistem-billiard.jpg",
     isVideo: false,
     tags: ["Laravel", "React", "Inertia.js", "TypeScript"],
     link: "#",
@@ -201,7 +201,7 @@ export const translatedProjects = (locale: "EN" | "ID") => [
   {
     title: "ESP32 DHT11 Monitoring",
     description: locale === "EN" ? "Real-time temperature and humidity monitoring system using ESP32 and DHT-11 sensor with live dashboard." : "Sistem monitoring suhu dan kelembaban secara real-time menggunakan ESP32 dan sensor DHT-11 dengan dashboard live.",
-    image: "/portfolio/flut-hand-phone.png",
+    image: "/portfolio/esp32-monitoring.jpg",
     isVideo: false,
     tags: ["ESP32", "TypeScript", "IoT", "Real-time"],
     link: "#",
@@ -211,7 +211,7 @@ export const translatedProjects = (locale: "EN" | "ID") => [
   {
     title: "IoT Water Monitoring",
     description: locale === "EN" ? "Water quality monitoring system based on IoT with real-time sensors and analytics dashboard." : "Sistem monitoring kualitas air berbasis IoT dengan sensor real-time dan dashboard analisis.",
-    image: "/portfolio/flut-chess.png",
+    image: "/portfolio/iot-water.jpg",
     isVideo: false,
     tags: ["CMake", "IoT", "ESP32", "Dashboard"],
     link: "#",
@@ -221,7 +221,7 @@ export const translatedProjects = (locale: "EN" | "ID") => [
   {
     title: "Momo Dimsum Menu",
     description: locale === "EN" ? "Digital menu website and ordering system for Momo Dimsum restaurant." : "Website menu digital dan sistem pemesanan untuk restoran Momo Dimsum.",
-    image: "/portfolio/uiux-1.jpg",
+    image: "/portfolio/momo-dimsum.jpg",
     isVideo: false,
     tags: ["HTML", "CSS", "JavaScript", "UI/UX"],
     link: "#",
@@ -231,7 +231,7 @@ export const translatedProjects = (locale: "EN" | "ID") => [
   {
     title: "AI Chatbot",
     description: locale === "EN" ? "AI-powered chatbot built with Next.js and OpenAI integration with real-time streaming responses." : "Chatbot bertenaga AI yang dibangun dengan Next.js dan integrasi OpenAI dengan respons streaming real-time.",
-    image: "/portfolio/flut-heads.png",
+    image: "/portfolio/ai-chatbot.jpg",
     isVideo: false,
     tags: ["Next.js", "OpenAI", "TypeScript", "AI"],
     link: "#",
@@ -251,7 +251,7 @@ export const translatedProjects = (locale: "EN" | "ID") => [
   {
     title: "TIASA Solution",
     description: locale === "EN" ? "Enterprise solution platform built with TypeScript for business process automation." : "Platform solusi enterprise yang dibangun dengan TypeScript untuk otomatisasi proses bisnis.",
-    image: "/portfolio/uiux-4.jpg",
+    image: "/portfolio/tiasa-solution.jpg",
     isVideo: false,
     tags: ["TypeScript", "React", "Enterprise"],
     link: "#",
