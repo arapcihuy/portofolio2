@@ -17,6 +17,8 @@ const projectGalleries: { [key: string]: string[] } = {
   "Monitoring System": ["/portfolio/uiux-7.jpg", "/portfolio/flut-hand-phone.png", "/portfolio/uiux-3.jpg"],
   "Keamanan": ["/portfolio/flut-iphone.png", "/portfolio/flut-chess.png", "/portfolio/flut-heads.png"],
   "Sistem Monitoring": ["/portfolio/uiux-7.jpg", "/portfolio/flut-hand-phone.png", "/portfolio/uiux-3.jpg"],
+  "IoT Devices": ["/portfolio/flut-hand-phone.png", "/portfolio/flut-chess.png", "/portfolio/uiux-7.jpg"],
+  "AI": ["/portfolio/flut-heads.png", "/portfolio/flut-iphone.png", "/portfolio/uiux-3.jpg"],
 }
 
 /* MacBook 3D — pre-rendered 3D render per category */
@@ -55,7 +57,9 @@ export default function Projects({ locale }: ProjectsProps) {
     locale === "EN" ? "SaaS Website" : "SaaS Website",
     locale === "EN" ? "e-Commerce" : "e-Commerce",
     locale === "EN" ? "CMS Website" : "CMS Website",
-    locale === "EN" ? "Monitoring System" : "Sistem Monitoring"
+    locale === "EN" ? "Monitoring System" : "Sistem Monitoring",
+    locale === "EN" ? "IoT Devices" : "IoT Devices",
+    "AI"
   ]
 
   const categoryMap: { [key: string]: string } = {
@@ -65,7 +69,9 @@ export default function Projects({ locale }: ProjectsProps) {
     "e-Commerce": "Quondam E-commerce",
     "CMS Website": "PT. Cakra Bahana Sakti",
     "Monitoring System": "Rumah Kinclong",
-    "Sistem Monitoring": "Rumah Kinclong"
+    "Sistem Monitoring": "Rumah Kinclong",
+    "IoT Devices": "ESP32 DHT11 Monitoring",
+    "AI": "AI Chatbot"
   }
 
   const activeProjectName = categoryMap[activeCategory] || "CIMEDs / PT Ontiyus Karya Mulia"
@@ -78,6 +84,8 @@ export default function Projects({ locale }: ProjectsProps) {
     "CMS Website": "/portfolio/macbook-3d-cms.png",
     "Monitoring System": "/portfolio/macbook-3d-monitoring.png",
     "Sistem Monitoring": "/portfolio/macbook-3d-monitoring.png",
+    "IoT Devices": "/portfolio/macbook-3d-monitoring.png",
+    "AI": "/portfolio/macbook-3d-saas.png"
   }
   const activeProjectMockup = categoryScreenshots[activeCategory] || activeProject.image || "/portfolio/cimeds-screenshot.jpg"
   const gallery = projectGalleries[activeCategory] || [activeProjectMockup, "/portfolio/flut-logo.png", "/portfolio/uiux-1.jpg"]
@@ -114,12 +122,12 @@ export default function Projects({ locale }: ProjectsProps) {
         </motion.div>
 
         <div className="flex justify-center w-full mb-10 md:mb-14 px-2">
-          <div className="flex items-center gap-1 p-1 rounded-full bg-zinc-900/60 border border-white/5">
+          <div className="flex items-center gap-1 p-1 rounded-full bg-zinc-900/60 border border-white/5 overflow-x-auto max-w-full scrollbar-hide">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`relative px-4 md:px-6 py-2.5 md:py-3 rounded-full text-xs md:text-sm font-medium cursor-pointer transition-all duration-300 ${
+                className={`relative px-3 md:px-5 py-2 md:py-2.5 rounded-full text-[10px] md:text-sm font-medium cursor-pointer transition-all duration-300 whitespace-nowrap shrink-0 ${
                   activeCategory === cat 
                     ? 'bg-zinc-800 text-white border border-white/10' 
                     : 'text-zinc-500 hover:text-zinc-300 border border-transparent'

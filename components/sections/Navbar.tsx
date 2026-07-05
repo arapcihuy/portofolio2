@@ -102,7 +102,7 @@ export default function Navbar({ locale, setLocale }: NavbarProps) {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="lg:hidden overflow-hidden mt-2 mx-4 bg-black/80 backdrop-blur-xl rounded-3xl border border-white/10"
+            className="lg:hidden overflow-hidden mt-2 mx-4 bg-black/80 backdrop-blur-xl rounded-3xl border border-white/10 pointer-events-auto"
           >
             <div className="flex flex-col space-y-1 p-4">
               <Link 
