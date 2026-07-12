@@ -181,7 +181,7 @@ export default function Projects({ locale }: ProjectsProps) {
                 transition={{ delay: 0.4, duration: 0.5 }}
                 className="absolute -bottom-6 sm:-bottom-8 left-1/2 -translate-x-1/2 z-20 whitespace-nowrap"
               >
-                <a href={activeProject.link} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs uppercase tracking-widest text-zinc-500 bg-zinc-950/80 px-2 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/5 backdrop-blur hover:text-zinc-300 hover:border-white/20 transition-all cursor-pointer">
+                <a href={activeProject.link !== "#" ? activeProject.link : (activeProject.github !== "#" ? activeProject.github : "#")} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 sm:gap-2 text-[10px] sm:text-xs uppercase tracking-widest text-zinc-500 bg-zinc-950/80 px-2 sm:px-4 py-1.5 sm:py-2 rounded-full border border-white/5 backdrop-blur hover:text-zinc-300 hover:border-white/20 transition-all cursor-pointer">
                   <span className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse" />
                   {activeProject.title}
                 </a>
@@ -234,7 +234,7 @@ export default function Projects({ locale }: ProjectsProps) {
                 {t("projects.all_desc")}
               </p>
             </div>
-            <a href="#" className="group flex items-center gap-1 text-sm font-medium text-white/80 hover:text-white mt-4 md:mt-0">
+            <a href="#projects" className="group flex items-center gap-1 text-sm font-medium text-white/80 hover:text-white mt-4 md:mt-0">
               {t("projects.see_all")}
               <span className="transition-transform group-hover:translate-x-1">&rarr;</span>
             </a>
@@ -249,6 +249,7 @@ export default function Projects({ locale }: ProjectsProps) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: idx * 0.1 }}
                 className="min-w-[260px] md:min-w-[340px] group cursor-pointer transition-all duration-300 hover:-translate-y-2"
+                onClick={() => { const url = item.link !== "#" ? item.link : (item.github !== "#" ? item.github : null); if (url) window.open(url, "_blank"); }}
               >
                 <div className="aspect-[3/2] overflow-hidden rounded-xl bg-white/5 mb-3 relative">
                   {item.isVideo ? (

@@ -1,9 +1,9 @@
 import ClientPage from "./ClientPage"
 
 export const metadata = {
-  title: "Rasyid Achmad - Frontend Developer",
+  title: "Rasyid Achmad — Fullstack Developer & Cybersecurity",
   description:
-    "Frontend Developer - UI/UX Designer. Passionate about creating beautiful and functional web experiences.",
+    "Fullstack developer specializing in React, Next.js, Vue, and Laravel. Cybersecurity specialist at Flut. Building secure, scalable web applications.",
 }
 
 export default function Page() {

@@ -125,6 +125,18 @@ export const translatedExperience = (locale: "EN" | "ID") => [
       ? "Designed user-friendly concepts using Figma for an e-commerce platform. Managed an innovative online learning platform with interactive courses and progress tracking."
       : "Merancang konsep ramah pengguna menggunakan Figma untuk platform e-commerce. Mengelola platform pembelajaran daring inovatif dengan kursus interaktif dan pelacakan kemajuan.",
   },
+  {
+    title: "TIASA Solution",
+    logo: "/portfolio/tiasa-hero.png",
+    bgColor: "bg-white",
+    type: locale === "EN" ? "Work" : "Pekerjaan",
+    role: locale === "EN" ? "Fullstack Developer" : "Pengembang Fullstack",
+    period: locale === "EN" ? "2026 - Present" : "2026 - Sekarang",
+    delay: "0.6s",
+    description: locale === "EN"
+      ? "Built enterprise digital solutions including Smart POS systems, company profiles, and management platforms for FnB businesses in Yogyakarta. Responsible for full-stack development using TypeScript, React, and Laravel."
+      : "Membangun solusi digital enterprise termasuk sistem Smart POS, company profile, dan platform manajemen untuk bisnis FnB di Yogyakarta. Bertanggung jawab atas pengembangan full-stack menggunakan TypeScript, React, dan Laravel.",
+  },
 ]
 
 export const translatedProjects = (locale: "EN" | "ID") => [
@@ -155,7 +167,7 @@ export const translatedProjects = (locale: "EN" | "ID") => [
     isVideo: true,
     tags: ["Next.js", "React", "CMS"],
     link: "https://www.cakrabahanasakti.com/",
-    github: "#",
+    github: "https://github.com/arapcihuy/pt.cakra-bahana-sakti",
     category: "web",
   },
   {
@@ -251,10 +263,10 @@ export const translatedProjects = (locale: "EN" | "ID") => [
   {
     title: "TIASA Solution",
     description: locale === "EN" ? "Enterprise solution platform built with TypeScript for business process automation." : "Platform solusi enterprise yang dibangun dengan TypeScript untuk otomatisasi proses bisnis.",
-    image: "/portfolio/tiasa-solution.jpg",
+    image: "/portfolio/tiasa-hero.png",
     isVideo: false,
     tags: ["TypeScript", "React", "Enterprise"],
-    link: "#",
+    link: "https://www.tiasasolution.com/",
     github: "https://github.com/arapcihuy/tiasa-solution",
     category: "web",
   },

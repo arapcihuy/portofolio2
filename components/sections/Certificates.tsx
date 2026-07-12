@@ -23,14 +23,14 @@ const certificatesData = [
     issuer: "Introduction to Cybersecurity",
     id: "CS-2024-cisco",
     logo: "/Cisco_logo_blue_2016.svg.png",
-    link: "#"
+    link: "/certificates/cybersecurity-essentials.pdf"
   },
   {
     title: "Merdeka Siber Academy",
     issuer: "Junior Cybersecurity Analyst",
     id: "MS-2024-cyber",
     logo: "/logo-merdeka-siber.png",
-    link: "#"
+    link: "/certificates/MS_BOCSE_20_COE_006.pdf"
   }
 ]
 

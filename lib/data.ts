@@ -1,4 +1,4 @@
-import { Home, Instagram, Github, Linkedin, Twitter, Mail } from "lucide-react"
+
 
 export const experienceData = [
   {
@@ -196,15 +196,8 @@ export const educationData = [
     description: "Participated in the national cybersecurity talent development program. Trained in practical penetration testing, incident response, and web application security auditing, adhering to industry standards for protecting digital assets and infrastructure.",
     delay: "0.15s",
     type: "Certification",
-    link: "/certificates/merdeka-siber.pdf",
+    link: "/certificates/MS_BOCSE_20_COE_006.pdf",
   },
 ]
 
-export const navItems = [
-  { icon: Home, label: "Home", href: "#" },
-  { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/r.asyidahmad/" },
-  { icon: Github, label: "GitHub", href: "https://github.com/arapcihuy" },
-  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/rasyid-ahmad-840b8b250/" },
-  { icon: Twitter, label: "Twitter", href: "https://twitter.com" },
-  { icon: Mail, label: "Email", href: "mailto:rasyidahmad180@gmail.com" },
-]
+// navItems removed — unused dead code
